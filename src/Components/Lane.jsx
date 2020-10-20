@@ -37,12 +37,27 @@ class Lane extends React.Component {
         })
     }
 
+    deleteCard = async (id) => {
+        // e.preventDefault();
+        const response = await fetch(`http://localhost:3333/card/${id}`, {
+            method: 'DELETE',
+        });
+        const json = await response.json();
+        if (json.status == 'ok') {
+            this.setState({
+                cards: this.state.cards.filter(c => c.id != id),
+            })
+        }
+    }
+
     render() {
         const { error, isLoaded, cards } = this.state;
         const allCards = cards.map( (card) => 
             <Card 
                 key={card.id}
                 name={card.name}
+                cardId={card.id}
+                deleteCard={this.deleteCard}
             />
         )
         return (

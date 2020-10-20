@@ -29,7 +29,7 @@ class Board extends React.Component {
             },
             body: JSON.stringify({
                 name: this.state.inputValue || 'New Lane',
-                boardId: 2,
+                boardId: this.props.id,
             })
         })
         const json = await response.json();

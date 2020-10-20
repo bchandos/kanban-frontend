@@ -6,7 +6,7 @@ function App() {
 
   return (
     <div className="App">
-      <Board id="2" />
+      <Board id="1" />
     </div>
   )
 }
