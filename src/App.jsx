@@ -6,7 +6,7 @@ function App() {
 
   return (
     <div className="App">
-      <Board id="1" lanes={[1, 2, 3, 4]} />
+      <Board id="2" />
     </div>
   )
 }
