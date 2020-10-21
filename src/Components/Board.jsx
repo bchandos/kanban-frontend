@@ -63,9 +63,8 @@ class Board extends React.Component {
         const { error, isLoaded, lanes } = this.state;
         const allLanes = lanes.map((lane) => 
             <Lane 
-                laneId={lane.id} 
                 key={lane.id} 
-                name={lane.name}
+                lane={lane}
                 deleteLane={this.deleteLane}
             />
         )
