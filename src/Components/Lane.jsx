@@ -1,5 +1,6 @@
 import React from 'react';
 import Card from './Card';
+import EditableText from './EditableText';
 import './Lane.css';
 
 class Lane extends React.Component {
@@ -44,8 +45,9 @@ class Lane extends React.Component {
         })
     }
 
-    deleteCard = async (id) => {
-        // e.preventDefault();
+    deleteCard = async (e) => {
+        e.preventDefault();
+        const id = e.currentTarget.dataset.cardId;
         const response = await fetch(`http://localhost:3333/card/${id}`, {
             method: 'DELETE',
         });
@@ -58,6 +60,7 @@ class Lane extends React.Component {
     }
 
     onDragStart = (e) => {
+        e.currentTarget.classList.add('being-dragged');
         const initialPosition = Number(e.currentTarget.dataset.index);
         const initialSortOrder = Number(e.currentTarget.dataset.sortOrder);
         const cardId = Number(e.currentTarget.dataset.cardId);
@@ -74,7 +77,7 @@ class Lane extends React.Component {
 
     onDragOver = (e) => {
         e.preventDefault();
-        e.currentTarget.style.borderColor = 'red';
+        e.currentTarget.classList.add('dragged-over');
         let newList = this.state.dragAndDrop.originalOrder;
         const draggedFrom = this.state.dragAndDrop.draggedFrom;
         const draggedTo = Number(e.currentTarget.dataset.index);
@@ -98,6 +101,7 @@ class Lane extends React.Component {
     }
 
     onDrop = async (e) => {
+        e.currentTarget.classList.remove('dragged-over');
         const response = await fetch(`http://localhost:3333/card/reorder`, {
             method: 'PUT',
             headers: {
@@ -116,13 +120,17 @@ class Lane extends React.Component {
     }
 
     onDragLeave = (e) => {
+        e.currentTarget.classList.remove('dragged-over');
         this.setState({
             dragAndDrop: {
                 ...this.state.dragAndDrop,
                 draggedTo: null
             }
         });
-        e.currentTarget.style.borderColor = 'grey';
+    }
+
+    onDragEnd = (e) => {
+        e.currentTarget.classList.remove('being-dragged');
     }
 
     render() {
@@ -138,6 +146,7 @@ class Lane extends React.Component {
                 onDragOver={this.onDragOver}
                 onDrop={this.onDrop}
                 onDragLeave={this.onDragLeave}
+                onDragEnd={this.onDragEnd}
             />
         )
         return (
@@ -145,9 +154,13 @@ class Lane extends React.Component {
                 <button className="delete-btn" 
                     onClick={() => this.props.deleteLane(this.props.lane.id)}
                 >
-                        X
+                        <i className="material-icons">delete</i>
                 </button>
-                <div className="lane-name">{this.props.lane.name}</div>
+                <EditableText 
+                    value={this.props.lane.name}
+                    id={this.props.lane.id}
+                    apiRoute="http://localhost:3333/lane"
+                />
                 <div className="card-holder">
                     {allCards}
                 </div>

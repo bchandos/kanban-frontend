@@ -1,5 +1,6 @@
 import React from 'react';
 import './Card.css';
+import EditableText from './EditableText';
 
 class Card extends React.Component {
     render() {
@@ -14,18 +15,18 @@ class Card extends React.Component {
                 onDragOver={this.props.onDragOver}
                 onDrop={this.props.onDrop}
                 onDragLeave={this.props.onDragLeave}
+                onDragEnd={this.props.onDragEnd}
             >
                 <div className="card-title">
-                    {this.props.card.name}
-                    ({this.props.card.sortOrder})
-                    ({this.props.card.id})
-
+                <EditableText 
+                    value={this.props.card.name} 
+                    id={this.props.card.id} 
+                    apiRoute="http://localhost:3333/card/"
+                />
                 </div>
-                <button className="delete-btn"
-                    onClick={() => this.props.deleteCard(this.props.card.id)}
-                >
-                        X
-                </button>
+                <i className="material-icons icon" onClick={this.props.deleteCard} data-card-id={this.props.card.id}>
+                    delete
+                </i>
             </div>
         );
     }

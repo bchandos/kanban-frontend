@@ -13,3 +13,14 @@
 .card-title {
     flex-grow: 1;
 }
+
+.being-dragged {
+    border-style: dashed;
+    color: darkgrey;
+    background-color: lightgray;
+}
+
+.dragged-over {
+    border-color: green;
+    border-width: 2px;
+}
