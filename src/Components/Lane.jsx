@@ -1,7 +1,6 @@
 import React from 'react';
 import Card from './Card';
 import EditableText from './EditableText';
-import './Lane.css';
 
 class Lane extends React.Component {
     state = {
@@ -60,7 +59,7 @@ class Lane extends React.Component {
     }
 
     onDragStart = (e) => {
-        e.currentTarget.classList.add('being-dragged');
+        e.currentTarget.classList.add('w3-opacity-max');
         const initialPosition = Number(e.currentTarget.dataset.index);
         const initialSortOrder = Number(e.currentTarget.dataset.sortOrder);
         const cardId = Number(e.currentTarget.dataset.cardId);
@@ -77,7 +76,7 @@ class Lane extends React.Component {
 
     onDragOver = (e) => {
         e.preventDefault();
-        e.currentTarget.classList.add('dragged-over');
+        e.currentTarget.classList.add('w3-border', 'w3-border-green');
         let newList = this.state.dragAndDrop.originalOrder;
         const draggedFrom = this.state.dragAndDrop.draggedFrom;
         const draggedTo = Number(e.currentTarget.dataset.index);
@@ -101,7 +100,7 @@ class Lane extends React.Component {
     }
 
     onDrop = async (e) => {
-        e.currentTarget.classList.remove('dragged-over');
+        e.currentTarget.classList.remove('w3-border', 'w3-border-green');
         const response = await fetch(`http://localhost:3333/card/reorder`, {
             method: 'PUT',
             headers: {
@@ -120,7 +119,7 @@ class Lane extends React.Component {
     }
 
     onDragLeave = (e) => {
-        e.currentTarget.classList.remove('dragged-over');
+        e.currentTarget.classList.remove('w3-border', 'w3-border-green');
         this.setState({
             dragAndDrop: {
                 ...this.state.dragAndDrop,
@@ -130,7 +129,7 @@ class Lane extends React.Component {
     }
 
     onDragEnd = (e) => {
-        e.currentTarget.classList.remove('being-dragged');
+        e.currentTarget.classList.remove('w3-opacity-max');
     }
 
     render() {
@@ -150,21 +149,23 @@ class Lane extends React.Component {
             />
         )
         return (
-            <div className="lane">
-                <button className="delete-btn" 
-                    onClick={() => this.props.deleteLane(this.props.lane.id)}
+            <div className="w3-panel lane w3-border w3-topbar w3-round w3-border-deep-purple">
+                <button 
+                    className="w3-circle" 
+                    onClick={this.props.deleteLane}
+                    data-lane-id={this.props.lane.id}
                 >
-                        <i className="material-icons">delete</i>
+                    <i className="material-icons icon">delete</i>
                 </button>
                 <EditableText 
                     value={this.props.lane.name}
                     id={this.props.lane.id}
                     apiRoute="http://localhost:3333/lane"
                 />
-                <div className="card-holder">
+                <div>
                     {allCards}
                 </div>
-                <button className="btn" onClick={this.addCard}>
+                <button className="w3-btn w3-light-gray w3-block" onClick={this.addCard}>
                     + Add New Card
                 </button>
             </div>

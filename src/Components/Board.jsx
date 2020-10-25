@@ -1,6 +1,5 @@
 import React from 'react';
 import Lane from './Lane';
-import './Board.css';
 
 class Board extends React.Component {
     
@@ -40,8 +39,9 @@ class Board extends React.Component {
         })
     }
 
-    deleteLane = async (id) => {
-        // e.preventDefault();
+    deleteLane = async (e) => {
+        e.preventDefault();
+        const id = e.currentTarget.dataset.laneId;
         const response = await fetch(`http://localhost:3333/lane/${id}`, {
             method: 'DELETE',
         });
@@ -69,13 +69,15 @@ class Board extends React.Component {
             />
         )
         return (
-            <div>
-                <p>
-                    This is the Kanban Board id {this.props.id}.
-                </p>
-                <input type="text" value={this.state.inputValue} className="input" onChange={this.handleInput}></input>
-                <button className="btn" onClick={this.addLane}>Add Lane</button>
-                <div className="board">
+            <div className="w3-container">
+                <div className="w3-panel">
+                    <h5>
+                        Kanban Board {this.props.id}
+                    </h5>
+                    <input type="text" value={this.state.inputValue} onChange={this.handleInput}></input>
+                    <button className="btn" onClick={this.addLane}>Add Lane</button>
+                </div>
+                <div className="lanes">
                     {allLanes}
                 </div>
             </div>

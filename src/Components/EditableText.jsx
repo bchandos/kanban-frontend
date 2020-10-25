@@ -1,5 +1,4 @@
 import React from 'react';
-import './EditableText.css';
 
 class EditableText extends React.Component {
     constructor(props) {
@@ -43,13 +42,12 @@ class EditableText extends React.Component {
 
     keyUp = (e) => {
         if (e.key === 'Enter') {
-            console.log(e.key);
             this.done();
         }
     }
 
     done = async (e) => {
-        const response = await fetch(this.props.apiRoute,
+        const response = await fetch(`${this.props.apiRoute}/${this.props.id}`,
         {
             method: 'PUT',
             headers: {
@@ -83,17 +81,18 @@ class EditableText extends React.Component {
         }
 
         return (
-            <div className="editable-div">
+            <div className="editable">
                 <input 
-                        type="text" 
-                        className="editable-input" 
-                        value={this.state.value} 
-                        onChange={this.handleInput} 
-                        disabled={!this.state.editMode}
-                        ref={this.nameInput}
-                        onKeyUp={this.keyUp}
-                    />
-                {icons}
+                    type="text" 
+                    value={this.state.value} 
+                    onChange={this.handleInput} 
+                    disabled={!this.state.editMode}
+                    ref={this.nameInput}
+                    onKeyUp={this.keyUp}
+                />
+                <div>
+                    {icons}
+                </div>
             </div>
         );
     }

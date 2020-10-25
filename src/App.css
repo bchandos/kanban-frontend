@@ -1,9 +1,19 @@
-.App {
-  text-align: center;
-  font-size: 1em;
+.editable {
+    display: flex;
+    justify-content: space-between;
 }
 
 .icon {
-  padding: 0.25em;
-  cursor: pointer;
+    cursor: pointer;
+}
+
+.lanes {
+    display: flex;
+    justify-content: flex-start;
+
+}
+
+.lane {
+    margin-left: 0.75em;
+    margin-right: 0.75em;
 }
