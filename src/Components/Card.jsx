@@ -60,14 +60,40 @@ class Card extends React.Component {
         })
     }
 
+    toggleCompletion = async (e) => {
+        const id = e.currentTarget.dataset.todoId;
+        const response = await fetch(`http://localhost:3333/todo/${id}`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    id: id,
+                    complete: e.currentTarget.checked,
+                })
+            });
+        const json = await response.json();
+        const idx = this.state.todos.findIndex(t => t.id === json.id);
+
+        this.setState({
+            todos: [
+                ...this.state.todos.slice(0, idx),
+                json,
+                ...this.state.todos.slice(idx+1)            
+            ]
+        });
+    }
+
     render() {
-        const completedPercentage = Math.round(this.props.card.completedPercentage * 100);
+        const completedPercentage = Math.round(((this.state.todos.filter(t => t.complete).length / this.state.todos.length) || 0) * 100);
         
         const todos = this.state.todos.map( (todo, index) => 
             <Todo 
                 key={todo.id}
                 todo={todo}
                 index={index}
+                toggleCompletion={this.toggleCompletion}
             />
         );
         
@@ -99,7 +125,11 @@ class Card extends React.Component {
                     </i>
                 </div>
                 <div className="w3-panel">
-                    <div>Complete: {completedPercentage}%</div>
+                    <div class="w3-light-grey">
+                        <div class="w3-container w3-green w3-center" style={{width: `${completedPercentage}%`, height: '24px'}}>
+                            {completedPercentage}%
+                        </div>
+                    </div> 
                     <textarea 
                         className="w3-block w3-margin-top w3-margin-bottom"
                         name={"card-content-" + this.props.card.id}
