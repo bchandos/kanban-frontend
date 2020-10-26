@@ -3,6 +3,11 @@
     justify-content: space-between;
 }
 
+.editable > input:focus {
+    outline: none;
+    border-bottom: 1px solid #9c9c9c
+}
+
 .icon {
     cursor: pointer;
 }
@@ -10,10 +15,24 @@
 .lanes {
     display: flex;
     justify-content: flex-start;
-
 }
 
 .lane {
     margin-left: 0.75em;
     margin-right: 0.75em;
+}
+
+.lane-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.todo {
+    display: flex;
+    align-items: center;
+}
+
+.input {
+    padding: 4px;
 }

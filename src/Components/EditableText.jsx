@@ -69,20 +69,43 @@ class EditableText extends React.Component {
         let icons;
         if (this.state.editMode) {
             icons = (
+                <div className="w3-display-right">
                     <span>
-                        <i className="material-icons icon" onClick={this.done}>done</i>
-                        <i className="material-icons icon" onClick={this.exitText}>clear</i>
-                    </span>);
+                        <i 
+                            className="material-icons icon" 
+                            onClick={this.done}
+                            title="Save changes"
+                        >
+                            done
+                        </i>
+                        <i 
+                            className="material-icons icon" 
+                            onClick={this.exitText}
+                            title="Cancel"
+                        >
+                            clear
+                        </i>
+                    </span>
+                </div>);
         } else {
             icons = (
-                <span>
-                    <i className="material-icons icon" onClick={this.editText}>edit</i>
-                </span>);
+                <div className="w3-display-hover w3-display-right w3-round">
+                    <span>
+                        <i 
+                            className="material-icons icon" 
+                            onClick={this.editText}
+                            title="Edit"
+                        >
+                            edit
+                        </i>
+                    </span>
+                </div>);
         }
 
         return (
-            <div className="editable">
+            <div className="editable w3-padding-small w3-hover-shadow w3-display-container" onDoubleClick={this.editText}>
                 <input 
+                    className="w3-input input"
                     type="text" 
                     value={this.state.value} 
                     onChange={this.handleInput} 
@@ -90,9 +113,7 @@ class EditableText extends React.Component {
                     ref={this.nameInput}
                     onKeyUp={this.keyUp}
                 />
-                <div>
-                    {icons}
-                </div>
+                {icons}
             </div>
         );
     }

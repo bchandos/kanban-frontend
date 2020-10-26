@@ -150,22 +150,24 @@ class Lane extends React.Component {
         )
         return (
             <div className="w3-panel lane w3-border w3-topbar w3-round w3-border-deep-purple">
-                <button 
-                    className="w3-circle" 
-                    onClick={this.props.deleteLane}
-                    data-lane-id={this.props.lane.id}
-                >
-                    <i className="material-icons icon">delete</i>
-                </button>
+                <div className="lane-header">
                 <EditableText 
                     value={this.props.lane.name}
                     id={this.props.lane.id}
                     apiRoute="http://localhost:3333/lane"
                 />
+                    <button 
+                        className="w3-btn w3-round-xxlarge" 
+                        onClick={this.props.deleteLane}
+                        data-lane-id={this.props.lane.id}
+                    >
+                        <i className="material-icons icon">delete</i>
+                    </button>
+                </div>
                 <div>
                     {allCards}
                 </div>
-                <button className="w3-btn w3-light-gray w3-block" onClick={this.addCard}>
+                <button className="w3-btn w3-light-gray w3-block w3-margin-bottom" onClick={this.addCard}>
                     + Add New Card
                 </button>
             </div>
