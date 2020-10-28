@@ -60,6 +60,20 @@ class Card extends React.Component {
         })
     }
 
+    deleteTodo = async (e) => {
+        e.preventDefault();
+        const id = e.currentTarget.dataset.todoId;
+        const response = await fetch(`http://localhost:3333/todo/${id}`, {
+            method: 'DELETE',
+        });
+        const json = await response.json();
+        if (json.status == 'ok') {
+            this.setState({
+                todos: this.state.todos.filter(t => t.id != id),
+            })
+        }
+    }
+
     toggleCompletion = async (e) => {
         const id = e.currentTarget.dataset.todoId;
         const response = await fetch(`http://localhost:3333/todo/${id}`,
@@ -86,7 +100,8 @@ class Card extends React.Component {
     }
 
     render() {
-        const completedPercentage = Math.round(((this.state.todos.filter(t => t.complete).length / this.state.todos.length) || 0) * 100);
+        const completion = (this.state.todos.filter(t => t.complete).length / this.state.todos.length) || 0;
+        const completedPercentage = Math.round(completion * 100);
         
         const todos = this.state.todos.map( (todo, index) => 
             <Todo 
@@ -94,57 +109,61 @@ class Card extends React.Component {
                 todo={todo}
                 index={index}
                 toggleCompletion={this.toggleCompletion}
+                deleteTodo={this.deleteTodo}
             />
         );
-        
-        return (
-            <div 
-                className="w3-card w3-hover-shadow w3-round"
-                draggable="true" 
-                data-index={this.props.index}
-                data-card-id={this.props.card.id}
-                data-sort-order={this.props.card.sortOrder}
-                onDragStart={this.props.onDragStart}
-                onDragOver={this.props.onDragOver}
-                onDrop={this.props.onDrop}
-                onDragLeave={this.props.onDragLeave}
-                onDragEnd={this.props.onDragEnd}
-            >
+        if ((!this.props.hideComplete) || (this.props.hideComplete && completion !== 1)) {
+            return (
                 <div 
-                    className="w3-panel" 
+                    className="w3-card w3-hover-shadow w3-round"
+                    draggable="true" 
+                    data-index={this.props.index}
+                    data-card-id={this.props.card.id}
+                    data-sort-order={this.props.card.sortOrder}
+                    onDragStart={this.props.onDragStart}
+                    onDragOver={this.props.onDragOver}
+                    onDrop={this.props.onDrop}
+                    onDragLeave={this.props.onDragLeave}
+                    onDragEnd={this.props.onDragEnd}
                 >
-                    <div className="w3-panel">
-                        <EditableText 
-                            value={this.props.card.name} 
-                            id={this.props.card.id} 
-                            apiRoute="http://localhost:3333/card/"
-                        />
-                    </div>
-                    <i className="material-icons icon" onClick={this.props.deleteCard} data-card-id={this.props.card.id}>
-                        delete
-                    </i>
-                </div>
-                <div className="w3-panel">
-                    <div class="w3-light-grey">
-                        <div class="w3-container w3-green w3-center" style={{width: `${completedPercentage}%`, height: '24px'}}>
-                            {completedPercentage}%
-                        </div>
-                    </div> 
-                    <textarea 
-                        className="w3-block w3-margin-top w3-margin-bottom"
-                        name={"card-content-" + this.props.card.id}
-                        id={"card-content-" + this.props.card.id}
-                        onChange={this.updateContents}
-                        value={this.state.contents}
+                    <div 
+                        className="w3-panel" 
                     >
-                    </textarea>
-                    {todos}
-                    <button className="w3-btn w3-light-gray w3-block w3-margin-top w3-margin-bottom" onClick={this.addTodo}>
-                    + Add New Todo
-                </button>
+                        <div className="w3-panel card-header">
+                            <EditableText 
+                                value={this.props.card.name} 
+                                id={this.props.card.id} 
+                                apiRoute="http://localhost:3333/card/"
+                            />
+                            <i className="material-icons icon" onClick={this.props.deleteCard} data-card-id={this.props.card.id}>
+                                delete
+                            </i>
+                        </div>
+                    </div>
+                    <div className="w3-panel">
+                        <div className="w3-light-grey">
+                            <div className="w3-container w3-green w3-center" style={{width: `${completedPercentage}%`}}>
+                                {completedPercentage}%
+                            </div>
+                        </div> 
+                        <textarea 
+                            className="w3-block w3-margin-top w3-margin-bottom"
+                            name={"card-content-" + this.props.card.id}
+                            id={"card-content-" + this.props.card.id}
+                            onChange={this.updateContents}
+                            value={this.state.contents}
+                        >
+                        </textarea>
+                        {todos}
+                        <button className="w3-btn w3-light-gray w3-block w3-margin-top w3-margin-bottom" onClick={this.addTodo}>
+                        + Add New Todo
+                    </button>
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        } else {
+            return(<div></div>);
+        }
     }
 }
 

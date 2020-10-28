@@ -14,6 +14,7 @@ class Lane extends React.Component {
             originalOrder: [],
             updatedOrder: []
         },
+        hideComplete: false,
     }
 
     async componentDidMount() {
@@ -132,6 +133,12 @@ class Lane extends React.Component {
         e.currentTarget.classList.remove('w3-opacity-max');
     }
 
+    handleClick = (e) => {
+        this.setState({
+            hideComplete: e.currentTarget.checked,
+        })
+    }
+
     render() {
         const { error, isLoaded, cards } = this.state;
         const allCards = cards.map( (card, index) => 
@@ -146,16 +153,17 @@ class Lane extends React.Component {
                 onDrop={this.onDrop}
                 onDragLeave={this.onDragLeave}
                 onDragEnd={this.onDragEnd}
+                hideComplete={this.state.hideComplete}
             />
         )
         return (
             <div className="w3-panel lane w3-border w3-topbar w3-round w3-border-deep-purple">
                 <div className="lane-header">
-                <EditableText 
-                    value={this.props.lane.name}
-                    id={this.props.lane.id}
-                    apiRoute="http://localhost:3333/lane"
-                />
+                    <EditableText 
+                        value={this.props.lane.name}
+                        id={this.props.lane.id}
+                        apiRoute="http://localhost:3333/lane"
+                    />
                     <button 
                         className="w3-btn w3-round-xxlarge" 
                         onClick={this.props.deleteLane}
@@ -163,6 +171,12 @@ class Lane extends React.Component {
                     >
                         <i className="material-icons icon">delete</i>
                     </button>
+                </div>
+                <div>
+                    <input className="w3-margin-left" type="checkbox" onClick={this.handleClick} />
+                    <span className="w3-padding-small">
+                        Hide completed cards
+                    </span>
                 </div>
                 <div>
                     {allCards}

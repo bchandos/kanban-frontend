@@ -20,6 +20,13 @@ class Todo extends React.Component {
                     id={this.props.todo.id} 
                     apiRoute="http://localhost:3333/todo/"
                 />
+                <i 
+                    className="material-icons icon" 
+                    data-todo-id={this.props.todo.id} 
+                    onClick={this.props.deleteTodo}
+                >
+                    delete
+                </i>
             </div>
         );
     }
