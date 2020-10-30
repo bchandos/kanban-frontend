@@ -11,7 +11,7 @@ class Board extends React.Component {
     }
 
     async componentDidMount() {
-        const response = await fetch(`http://localhost:3333/board/${this.props.id}/lanes`);
+        const response = await fetch(`http://localhost:3333/board/${this.props.boardId}/lanes`);
         const json = await response.json()
         this.setState({
             isLoaded: true,
@@ -28,7 +28,7 @@ class Board extends React.Component {
             },
             body: JSON.stringify({
                 name: this.state.inputValue || 'New Lane',
-                boardId: this.props.id,
+                boardId: this.props.boardId,
             })
         })
         const json = await response.json();
@@ -71,9 +71,6 @@ class Board extends React.Component {
         return (
             <div className="w3-container">
                 <div className="w3-panel">
-                    <h5>
-                        Kanban Board {this.props.id}
-                    </h5>
                     <input type="text" value={this.state.inputValue} onChange={this.handleInput}></input>
                     <button className="btn" onClick={this.addLane}>Add Lane</button>
                 </div>

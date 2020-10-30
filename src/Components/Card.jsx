@@ -10,6 +10,7 @@ class Card extends React.Component {
             contents: this.props.card.contents || '',
             isLoaded: false,
             todos: [],
+            keyCounter: 0
         }
     }
 
@@ -23,7 +24,22 @@ class Card extends React.Component {
         })
     }
 
-    updateContents = async (e) => {
+    updateContent = (e) => {
+        this.setState({
+            contents: e.currentTarget.value,
+            keyCounter: this.state.keyCounter + 1,
+        })
+        // Don't send an API call on every keystroke, unless that keystroke
+        // clears the field
+        if (this.state.keyCounter >= 15 || e.currentTarget.value === '') {
+            this.uploadContents(e);
+            this.setState({
+                keyCounter: 0,
+            })
+        }
+    }
+
+    uploadContents = async (e) => {
         const response = await fetch(`http://localhost:3333/card/${this.props.card.id}`,
             {
                 method: 'PUT',
@@ -32,6 +48,8 @@ class Card extends React.Component {
                 },
                 body: JSON.stringify({
                     id: this.props.id,
+                    name: this.props.card.name,
+                    laneId: this.props.card.LaneId,
                     contents: e.currentTarget.value,
                 })
             });
@@ -150,7 +168,8 @@ class Card extends React.Component {
                             className="w3-block w3-margin-top w3-margin-bottom"
                             name={"card-content-" + this.props.card.id}
                             id={"card-content-" + this.props.card.id}
-                            onChange={this.updateContents}
+                            onBlur={this.uploadContents}
+                            onChange={this.updateContent}
                             value={this.state.contents}
                         >
                         </textarea>

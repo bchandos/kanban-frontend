@@ -1,12 +1,13 @@
 import React from 'react';
-import Board from './Components/Board';
+import BoardContainer from './Components/BoardContainer';
+// import './w3.css';
 import './App.css';
 
 function App() {
 
   return (
     <div>
-      <Board id="1" />
+      <BoardContainer />
       <footer className="w3-container w3-gray">
           <div className="right-align">
             &copy; 2020 <a href="https://billchandos.dev">billchandos.dev</a>

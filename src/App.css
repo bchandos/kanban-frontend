@@ -8,8 +8,17 @@
     border-bottom: 1px solid #9c9c9c
 }
 
+.editable:hover {
+    box-shadow: 3px 3px 10px rgba(103, 58, 183, 0.1);
+}
+
+.editable i {
+    padding-right: 6px;
+}
+
 .icon {
     cursor: pointer;
+    opacity: 0.65;
 }
 
 .lanes {

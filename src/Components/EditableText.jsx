@@ -16,13 +16,17 @@ class EditableText extends React.Component {
         if (this.state.editMode) {
             this.nameInput.current.focus();
         }
+        // If the value is the default "New Todo", select it for easy replacing
+        if (this.nameInput.current.value === 'New Todo') {
+            this.nameInput.current.select();
+        }
     }
 
     editText = (e) => {
         // Set state to edit mode and log the old value
         this.setState({
             editMode: true,
-            oldValue: e.target.value,
+            oldValue: e.currentTarget.value,
         });
     }
     
@@ -103,7 +107,7 @@ class EditableText extends React.Component {
         }
 
         return (
-            <div className="editable w3-padding-small w3-hover-shadow w3-display-container" onDoubleClick={this.editText}>
+            <div className="editable w3-padding-small w3-display-container" onDoubleClick={this.editText}>
                 <input 
                     className="w3-input input"
                     type="text" 
