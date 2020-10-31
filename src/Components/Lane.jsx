@@ -62,8 +62,6 @@ class Lane extends React.Component {
     onDragStart = (e) => {
         e.currentTarget.classList.add('w3-opacity-max');
         const initialPosition = Number(e.currentTarget.dataset.index);
-        const initialSortOrder = Number(e.currentTarget.dataset.sortOrder);
-        const cardId = Number(e.currentTarget.dataset.cardId);
         this.setState({
             dragAndDrop: {
                 ...this.state.dragAndDrop,
@@ -148,7 +146,6 @@ class Lane extends React.Component {
                 index={index}
                 deleteCard={this.deleteCard}
                 onDragStart={this.onDragStart}
-                onDragStart={this.onDragStart}
                 onDragOver={this.onDragOver}
                 onDrop={this.onDrop}
                 onDragLeave={this.onDragLeave}
@@ -157,7 +154,18 @@ class Lane extends React.Component {
             />
         )
         return (
-            <div className="w3-panel lane w3-border w3-topbar w3-round w3-border-deep-purple">
+            <div 
+                className="w3-panel lane w3-border w3-topbar w3-round w3-border-deep-purple" 
+                draggable="true"
+                data-index={this.props.index}
+                data-lane-id={this.props.lane.id}
+                data-sort-order={this.props.lane.sortOrder}
+                onDragStart={this.props.onDragStart}
+                onDragOver={this.props.onDragOver}
+                onDrop={this.props.onDrop}
+                onDragLeave={this.props.onDragLeave}
+                onDragEnd={this.props.onDragEnd}
+            >
                 <div className="lane-header">
                     <EditableText 
                         value={this.props.lane.name}
