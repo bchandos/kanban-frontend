@@ -29,11 +29,11 @@ class BoardContainer extends React.Component {
             })
         })
         const json = await response.json();
-        this.setState({
-            boards: [...this.state.boards, json],
+        this.setState((state) => ({
+            boards: [...state.boards, json],
             inputValue: '',
             selectedBoard: json.id,
-        })
+        }));
     }
 
     handleInput = (e) => {

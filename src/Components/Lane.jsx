@@ -53,23 +53,23 @@ class Lane extends React.Component {
         });
         const json = await response.json();
         if (json.status == 'ok') {
-            this.setState({
-                cards: this.state.cards.filter(c => c.id != id),
-            })
+            this.setState((state) => ({
+                cards: state.cards.filter(c => c.id != id),
+            }));
         }
     }
 
     onDragStart = (e) => {
         e.currentTarget.classList.add('w3-opacity-max');
         const initialPosition = Number(e.currentTarget.dataset.index);
-        this.setState({
+        this.setState((state) => ({
             dragAndDrop: {
-                ...this.state.dragAndDrop,
+                ...state.dragAndDrop,
                 draggedFrom: initialPosition,
                 isDragging: true,
-                originalOrder: this.state.cards.map(c => c.id)
+                originalOrder: state.cards.map(c => c.id)
             }
-        });
+        }));
         e.dataTransfer.setData("text/html", ''); // Firefox?
     }
 
@@ -88,13 +88,13 @@ class Lane extends React.Component {
             ...remainingItems.slice(draggedTo)
         ]
         if (draggedTo !== this.state.dragAndDrop.draggedTo) {
-            this.setState({
+            this.setState((state) => ({
                 dragAndDrop: {
-                    ...this.state.dragAndDrop,
+                    ...state.dragAndDrop,
                     updatedOrder: newList,
                     draggedTo: draggedTo
                 }
-            });
+            }));
         }
     }
 
@@ -119,12 +119,12 @@ class Lane extends React.Component {
 
     onDragLeave = (e) => {
         e.currentTarget.classList.remove('w3-border', 'w3-border-green');
-        this.setState({
+        this.setState((state) => ({
             dragAndDrop: {
-                ...this.state.dragAndDrop,
+                ...state.dragAndDrop,
                 draggedTo: null
             }
-        });
+        }));
     }
 
     onDragEnd = (e) => {

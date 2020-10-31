@@ -32,10 +32,10 @@ class EditableText extends React.Component {
     
     exitText = (e) => {
         // Exiting edit mode should set the old value
-        this.setState({
+        this.setState((state) => ({
             editMode: false,
-            value: this.state.oldValue,
-        });
+            value: state.oldValue,
+        }));
     }
 
     handleInput = (e) => {

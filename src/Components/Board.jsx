@@ -39,11 +39,11 @@ class Board extends React.Component {
             })
         })
         const json = await response.json();
-        this.setState({
+        this.setState((state) => ({
             isLoaded: true,
-            lanes: [...this.state.lanes, json],
+            lanes: [...state.lanes, json],
             inputValue: '',
-        })
+        }));
     }
 
     deleteLane = async (e) => {
@@ -54,23 +54,23 @@ class Board extends React.Component {
         });
         const json = await response.json();
         if (json.status == 'ok') {
-            this.setState({
-                lanes: this.state.lanes.filter(l => l.id != id),
-            })
+            this.setState((state) => ({
+                lanes: state.lanes.filter(l => l.id != id),
+            }));
         }
     }
 
     onDragStart = (e) => {
         e.currentTarget.classList.add('w3-opacity-max');
         const initialPosition = Number(e.currentTarget.dataset.index);
-        this.setState({
+        this.setState((state) => ({
             dragAndDrop: {
-                ...this.state.dragAndDrop,
+                ...state.dragAndDrop,
                 draggedFrom: initialPosition,
                 isDragging: true,
-                originalOrder: this.state.lanes.map(l => l.id)
+                originalOrder: state.lanes.map(l => l.id)
             }
-        });
+        }));
         e.dataTransfer.setData("text/html", ''); // Firefox?
     }
 
@@ -89,13 +89,13 @@ class Board extends React.Component {
             ...remainingItems.slice(draggedTo)
         ]
         if (draggedTo !== this.state.dragAndDrop.draggedTo) {
-            this.setState({
+            this.setState((state) => ({
                 dragAndDrop: {
-                    ...this.state.dragAndDrop,
+                    ...state.dragAndDrop,
                     updatedOrder: newList,
                     draggedTo: draggedTo
                 }
-            });
+            }));
         }
     }
 
@@ -120,12 +120,12 @@ class Board extends React.Component {
 
     onDragLeave = (e) => {
         e.currentTarget.classList.remove('w3-leftbar', 'w3-rightbar');
-        this.setState({
+        this.setState((state) => ({
             dragAndDrop: {
-                ...this.state.dragAndDrop,
+                ...state.dragAndDrop,
                 draggedTo: null
             }
-        });
+        }));
     }
 
     onDragEnd = (e) => {

@@ -25,10 +25,10 @@ class Card extends React.Component {
     }
 
     updateContent = (e) => {
-        this.setState({
+        this.setState((state) => ({
             contents: e.currentTarget.value,
-            keyCounter: this.state.keyCounter + 1,
-        })
+            keyCounter: state.keyCounter + 1,
+        }));
         // Don't send an API call on every keystroke, unless that keystroke
         // clears the field
         if (this.state.keyCounter >= 15 || e.currentTarget.value === '') {
@@ -86,9 +86,9 @@ class Card extends React.Component {
         });
         const json = await response.json();
         if (json.status == 'ok') {
-            this.setState({
-                todos: this.state.todos.filter(t => t.id != id),
-            })
+            this.setState((state) => ({
+                todos: state.todos.filter(t => t.id != id),
+            }));
         }
     }
 
@@ -108,13 +108,13 @@ class Card extends React.Component {
         const json = await response.json();
         const idx = this.state.todos.findIndex(t => t.id === json.id);
 
-        this.setState({
+        this.setState((state) => ({
             todos: [
-                ...this.state.todos.slice(0, idx),
+                ...state.todos.slice(0, idx),
                 json,
-                ...this.state.todos.slice(idx+1)            
+                ...state.todos.slice(idx+1)            
             ]
-        });
+        }));
     }
 
     render() {
