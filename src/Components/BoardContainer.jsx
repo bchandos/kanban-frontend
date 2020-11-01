@@ -1,19 +1,30 @@
 import React from 'react';
 import Board from './Board';
+import EditableSelect from './EditableSelect';
 
 class BoardContainer extends React.Component {
     
     state = {
         boards: [],
-        selectedBoard: 1,
+        selectedBoard: {},
         inputValue: '',
     }
 
     async componentDidMount() {
         const response = await fetch(`http://localhost:3333/board/`);
         const json = await response.json()
+
+        const lastBoard = localStorage.getItem('boardId');
+        let selectedBoard;
+        if (lastBoard) {
+            selectedBoard = json.find(b => b.id == lastBoard);
+        } else {
+            selectedBoard = json[0]
+        }
+
         this.setState({
             boards: json,
+            selectedBoard: selectedBoard,
         })
     }
 
@@ -32,7 +43,7 @@ class BoardContainer extends React.Component {
         this.setState((state) => ({
             boards: [...state.boards, json],
             inputValue: '',
-            selectedBoard: json.id,
+            selectedBoard: json,
         }));
     }
 
@@ -43,31 +54,32 @@ class BoardContainer extends React.Component {
     }
 
     handleSelect = (e) => {
-        e.preventDefault();
-        this.setState({
-            selectedBoard: e.currentTarget.value,
-        })
+        e.persist();
+        this.setState((state) => ({
+            selectedBoard: state.boards.find(b => b.id == e.target.dataset.value),
+        }));
+        localStorage.setItem('boardId', e.target.dataset.value);
     }
   
     render() {
-        const options = this.state.boards.map((board) => {
-            if (board.id === this.props.selectedBoard) {
-                return <option key={board.id} value={board.id} selected>{board.name}</option>
-            } else {
-                return <option key={board.id} value={board.id}>{board.name}</option>
-            }
-        });
-
         return (
             <div className="w3-container">
-                <select name="board-select" onChange={this.handleSelect}>
-                    {options}
-                </select>
-                <div className="w3-panel">
-                    <input type="text" value={this.state.inputValue} onChange={this.handleInput}></input>
-                    <button className="btn" onClick={this.addBoard}>Add Board</button>
+                <div className="flex-container">
+                    <EditableSelect 
+                        key={this.state.selectedBoard.name}
+                        value={this.state.selectedBoard.name}
+                        obj={this.state.selectedBoard}
+                        options={this.state.boards}
+                        id={this.state.selectedBoard.id}
+                        apiRoute="http://localhost:3333/board/"
+                        handleSelect={this.handleSelect}
+                        defaultText='New Board'
+                    />
+                    <button className="w3-btn" onClick={this.addBoard}>
+                        <i className="material-icons">add</i>
+                    </button>
                 </div>
-                <Board key={this.state.selectedBoard} boardId={this.state.selectedBoard}/>
+                <Board key={this.state.selectedBoard.id} boardId={this.state.selectedBoard.id}/>
             </div>
         );
     }

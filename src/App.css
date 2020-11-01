@@ -16,6 +16,21 @@
     padding-right: 6px;
 }
 
+.flex-container {
+    display: flex;
+}
+
+.flex-grow {
+    flex-grow: 1;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%
+}
+
 .icon {
     cursor: pointer;
     opacity: 0.65;

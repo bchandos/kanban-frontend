@@ -25,8 +25,9 @@ class Card extends React.Component {
     }
 
     updateContent = (e) => {
+        e.persist();
         this.setState((state) => ({
-            contents: e.currentTarget.value,
+            contents: e.target.value,
             keyCounter: state.keyCounter + 1,
         }));
         // Don't send an API call on every keystroke, unless that keystroke
@@ -152,6 +153,7 @@ class Card extends React.Component {
                                 value={this.props.card.name} 
                                 id={this.props.card.id} 
                                 apiRoute="http://localhost:3333/card/"
+                                defaultText='New Card'
                             />
                             <i className="material-icons icon" onClick={this.props.deleteCard} data-card-id={this.props.card.id}>
                                 delete

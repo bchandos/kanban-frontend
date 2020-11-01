@@ -156,12 +156,11 @@ class Board extends React.Component {
         )
         return (
             <div className="w3-container">
-                <div className="w3-panel">
-                    <input type="text" value={this.state.inputValue} onChange={this.handleInput}></input>
-                    <button className="btn" onClick={this.addLane}>Add Lane</button>
-                </div>
                 <div className="lanes">
                     {allLanes}
+                    <div className="w3-panel lane w3-border w3-topbar w3-round w3-border-deep-purple" style={{width: '24em'}}>
+                        <button className="w3-btn w3-light-gray w3-block w3-margin-bottom w3-margin-top" onClick={this.addLane}>Add Lane</button>
+                    </div>
                 </div>
             </div>
         );

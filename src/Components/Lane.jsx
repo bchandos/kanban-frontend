@@ -24,6 +24,13 @@ class Lane extends React.Component {
             isLoaded: true,
             cards: json
         })
+
+        const laneHide = localStorage.getItem(`lane${this.props.lane.id}Hide`);
+        if (laneHide) {
+            this.setState({
+                hideComplete: laneHide === 'true',
+            })
+        }
     }
 
     addCard = async (e) => {
@@ -135,6 +142,7 @@ class Lane extends React.Component {
         this.setState({
             hideComplete: e.currentTarget.checked,
         })
+        localStorage.setItem(`lane${this.props.lane.id}Hide`, e.currentTarget.checked);
     }
 
     render() {
@@ -171,6 +179,7 @@ class Lane extends React.Component {
                         value={this.props.lane.name}
                         id={this.props.lane.id}
                         apiRoute="http://localhost:3333/lane"
+                        defaultText='New Lane'
                     />
                     <button 
                         className="w3-btn w3-round-xxlarge" 
@@ -181,7 +190,7 @@ class Lane extends React.Component {
                     </button>
                 </div>
                 <div>
-                    <input className="w3-margin-left" type="checkbox" onClick={this.handleClick} />
+                    <input className="w3-margin-left" type="checkbox" onChange={this.handleClick} checked={this.state.hideComplete} />
                     <span className="w3-padding-small">
                         Hide completed cards
                     </span>

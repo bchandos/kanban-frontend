@@ -16,8 +16,8 @@ class EditableText extends React.Component {
         if (this.state.editMode) {
             this.nameInput.current.focus();
         }
-        // If the value is the default "New Todo", select it for easy replacing
-        if (this.nameInput.current.value === 'New Todo') {
+        // If the value is the default, select it for easy replacing
+        if (this.nameInput.current.value === this.props.defaultText) {
             this.nameInput.current.select();
         }
     }

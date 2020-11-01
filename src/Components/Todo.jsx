@@ -19,6 +19,7 @@ class Todo extends React.Component {
                     value={this.props.todo.name} 
                     id={this.props.todo.id} 
                     apiRoute="http://localhost:3333/todo/"
+                    defaultText='New Todo'
                 />
                 <i 
                     className="material-icons icon" 
