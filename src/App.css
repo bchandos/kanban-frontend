@@ -1,3 +1,7 @@
+.dropdown-item {
+    cursor: pointer;
+}
+
 .editable {
     display: flex;
     justify-content: space-between;
@@ -34,6 +38,7 @@
 .icon {
     cursor: pointer;
     opacity: 0.65;
+    vertical-align: bottom;
 }
 
 .lanes {

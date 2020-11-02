@@ -132,26 +132,26 @@ class EditableSelect extends React.Component {
             if (item.id === this.props.id) {
                 return (
                     <div 
-                        className="w3-padding w3-hover-light-gray"
+                        className="w3-padding w3-hover-light-gray dropdown-item"
                         key={item.id} 
                         data-value={item.id}
                         onClick={this.props.handleSelect}
                     >
-                        <span className="w3-bar-item">
+                        <span className="w3-bar-item w3-middle">
                             {item.name}
-                            <i className="material-icons icon">check</i>
                         </span>
+                        <i className="material-icons icon">check</i>
                     </div>
                     )
             } else {
                 return (
                     <div 
-                        className="w3-padding w3-hover-light-gray"
+                        className="w3-padding w3-hover-light-gray dropdown-item"
                         key={item.id} 
                         data-value={item.id}
                         onClick={this.props.handleSelect}
                     >
-                        <span className="w3-bar-item">
+                        <span className="w3-bar-item w3-middle">
                             {item.name}
                         </span> 
                     </div>
@@ -164,7 +164,7 @@ class EditableSelect extends React.Component {
                 <div className="flex-container">
                     <div className="editable w3-padding-small w3-display-container flex-grow" onDoubleClick={this.editText}>
                         <input 
-                            className="w3-input input"
+                            className="w3-input input w3-large"
                             type="text" 
                             value={this.state.value} 
                             onChange={this.handleInput} 
@@ -185,7 +185,7 @@ class EditableSelect extends React.Component {
                         </button>
                     </div>
                 </div>
-                <div id="dropdown" className="w3-dropdown-content w3-border" style={{width: '100%'}}>
+                <div id="dropdown" className="w3-dropdown-content w3-border w3-card" style={{width: '100%'}}>
                     {options}
                 </div>
             </div>
