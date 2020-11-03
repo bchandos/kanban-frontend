@@ -18,7 +18,7 @@ class Board extends React.Component {
     }
 
     async componentDidMount() {
-        const response = await fetch(`http://localhost:3333/board/${this.props.boardId}/lanes`);
+        const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/board/${this.props.boardId}/lanes`);
         const json = await response.json()
         this.setState({
             isLoaded: true,
@@ -28,7 +28,7 @@ class Board extends React.Component {
 
     addLane = async (e) => {
         e.preventDefault();
-        const response = await fetch(`http://localhost:3333/lane`, {
+        const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/lane`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -49,7 +49,7 @@ class Board extends React.Component {
     deleteLane = async (e) => {
         e.preventDefault();
         const id = e.currentTarget.dataset.laneId;
-        const response = await fetch(`http://localhost:3333/lane/${id}`, {
+        const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/lane/${id}`, {
             method: 'DELETE',
         });
         const json = await response.json();
@@ -101,7 +101,7 @@ class Board extends React.Component {
 
     onDrop = async (e) => {
         e.currentTarget.classList.remove('w3-leftbar', 'w3-rightbar');
-        const response = await fetch(`http://localhost:3333/lane/reorder`, {
+        const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/lane/reorder`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -155,7 +155,7 @@ class Board extends React.Component {
             />
         )
         return (
-            <div className="w3-container">
+            <div>
                 <div className="lanes">
                     {allLanes}
                     <div className="w3-panel lane w3-border w3-topbar w3-round w3-border-deep-purple" style={{width: '24em'}}>

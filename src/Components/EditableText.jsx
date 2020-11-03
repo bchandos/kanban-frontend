@@ -51,7 +51,7 @@ class EditableText extends React.Component {
     }
 
     done = async (e) => {
-        const response = await fetch(`${this.props.apiRoute}/${this.props.id}`,
+        const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/${this.props.apiRoute}/${this.props.id}`,
         {
             method: 'PUT',
             headers: {

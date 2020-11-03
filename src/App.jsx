@@ -4,7 +4,6 @@ import BoardContainer from './Components/BoardContainer';
 import './App.css';
 
 function App() {
-
   return (
     <div>
       <BoardContainer />

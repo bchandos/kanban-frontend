@@ -15,7 +15,7 @@ class Card extends React.Component {
     }
 
     async componentDidMount() {
-        const response = await fetch(`http://localhost:3333/card/${this.props.card.id}/todos`);
+        const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/card/${this.props.card.id}/todos`);
         const json = await response.json();
 
         this.setState({
@@ -41,7 +41,7 @@ class Card extends React.Component {
     }
 
     uploadContents = async (e) => {
-        const response = await fetch(`http://localhost:3333/card/${this.props.card.id}`,
+        const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/card/${this.props.card.id}`,
             {
                 method: 'PUT',
                 headers: {
@@ -62,7 +62,7 @@ class Card extends React.Component {
 
     addTodo = async (e) => {
         e.preventDefault();
-        const response = await fetch(`http://localhost:3333/todo`, {
+        const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/todo`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -82,7 +82,7 @@ class Card extends React.Component {
     deleteTodo = async (e) => {
         e.preventDefault();
         const id = e.currentTarget.dataset.todoId;
-        const response = await fetch(`http://localhost:3333/todo/${id}`, {
+        const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/todo/${id}`, {
             method: 'DELETE',
         });
         const json = await response.json();
@@ -95,7 +95,7 @@ class Card extends React.Component {
 
     toggleCompletion = async (e) => {
         const id = e.currentTarget.dataset.todoId;
-        const response = await fetch(`http://localhost:3333/todo/${id}`,
+        const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/todo/${id}`,
             {
                 method: 'PUT',
                 headers: {
@@ -152,7 +152,7 @@ class Card extends React.Component {
                             <EditableText 
                                 value={this.props.card.name} 
                                 id={this.props.card.id} 
-                                apiRoute="http://localhost:3333/card/"
+                                apiRoute="card"
                                 defaultText='New Card'
                             />
                             <i className="material-icons icon" onClick={this.props.deleteCard} data-card-id={this.props.card.id}>

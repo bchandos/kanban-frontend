@@ -18,7 +18,7 @@ class Todo extends React.Component {
                 <EditableText 
                     value={this.props.todo.name} 
                     id={this.props.todo.id} 
-                    apiRoute="http://localhost:3333/todo/"
+                    apiRoute="todo"
                     defaultText='New Todo'
                 />
                 <i 

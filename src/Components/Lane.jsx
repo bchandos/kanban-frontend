@@ -18,7 +18,7 @@ class Lane extends React.Component {
     }
 
     async componentDidMount() {
-        const response = await fetch(`http://localhost:3333/lane/${this.props.lane.id}/cards`);
+        const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/lane/${this.props.lane.id}/cards`);
         const json = await response.json()
         this.setState({
             isLoaded: true,
@@ -35,7 +35,7 @@ class Lane extends React.Component {
 
     addCard = async (e) => {
         e.preventDefault();
-        const response = await fetch(`http://localhost:3333/card`, {
+        const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/card`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -55,7 +55,7 @@ class Lane extends React.Component {
     deleteCard = async (e) => {
         e.preventDefault();
         const id = e.currentTarget.dataset.cardId;
-        const response = await fetch(`http://localhost:3333/card/${id}`, {
+        const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/card/${id}`, {
             method: 'DELETE',
         });
         const json = await response.json();
@@ -107,7 +107,7 @@ class Lane extends React.Component {
 
     onDrop = async (e) => {
         e.currentTarget.classList.remove('w3-border', 'w3-border-green');
-        const response = await fetch(`http://localhost:3333/card/reorder`, {
+        const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/card/reorder`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -178,7 +178,7 @@ class Lane extends React.Component {
                     <EditableText 
                         value={this.props.lane.name}
                         id={this.props.lane.id}
-                        apiRoute="http://localhost:3333/lane"
+                        apiRoute="lane"
                         defaultText='New Lane'
                     />
                     <button 

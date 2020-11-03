@@ -11,7 +11,7 @@ class BoardContainer extends React.Component {
     }
 
     async componentDidMount() {
-        const response = await fetch(`http://localhost:3333/board/`);
+        const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/board/`);
         const json = await response.json()
 
         const lastBoard = localStorage.getItem('boardId');
@@ -30,7 +30,7 @@ class BoardContainer extends React.Component {
 
     addBoard = async (e) => {
         e.preventDefault();
-        const response = await fetch(`http://localhost:3333/board`, {
+        const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/board`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -71,7 +71,7 @@ class BoardContainer extends React.Component {
                         obj={this.state.selectedBoard}
                         options={this.state.boards}
                         id={this.state.selectedBoard.id}
-                        apiRoute="http://localhost:3333/board/"
+                        apiRoute="board"
                         handleSelect={this.handleSelect}
                         defaultText='New Board'
                     />
