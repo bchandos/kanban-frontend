@@ -1,5 +1,6 @@
 import React from 'react';
 import Lane from './Lane';
+import { getLanes, addLane, deleteLane, reorderLanes } from '../api/api';
 
 class Board extends React.Component {
     
@@ -18,8 +19,7 @@ class Board extends React.Component {
     }
 
     async componentDidMount() {
-        const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/board/${this.props.boardId}/lanes`);
-        const json = await response.json()
+        const json = await getLanes(this.props.boardId);
         this.setState({
             isLoaded: true,
             lanes: json,
@@ -28,17 +28,7 @@ class Board extends React.Component {
 
     addLane = async (e) => {
         e.preventDefault();
-        const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/lane`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                name: this.state.inputValue || 'New Lane',
-                boardId: this.props.boardId,
-            })
-        })
-        const json = await response.json();
+        const json = await addLane(this.props.boardId);
         this.setState((state) => ({
             isLoaded: true,
             lanes: [...state.lanes, json],
@@ -49,10 +39,7 @@ class Board extends React.Component {
     deleteLane = async (e) => {
         e.preventDefault();
         const id = e.currentTarget.dataset.laneId;
-        const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/lane/${id}`, {
-            method: 'DELETE',
-        });
-        const json = await response.json();
+        const json = await deleteLane(id);
         if (json.status == 'ok') {
             this.setState((state) => ({
                 lanes: state.lanes.filter(l => l.id != id),
@@ -101,17 +88,7 @@ class Board extends React.Component {
 
     onDrop = async (e) => {
         e.currentTarget.classList.remove('w3-leftbar', 'w3-rightbar');
-        const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/lane/reorder`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                newOrder: this.state.dragAndDrop.updatedOrder,
-                boardId: this.props.boardId,
-            })
-        })
-        const json = await response.json();
+        const json = await reorderLanes(this.state.dragAndDrop.updatedOrder, this.props.boardId);
         this.setState({
             isLoaded: true,
             lanes: json,

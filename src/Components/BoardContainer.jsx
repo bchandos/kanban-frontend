@@ -2,6 +2,8 @@ import React from 'react';
 import Board from './Board';
 import EditableSelect from './EditableSelect';
 
+import { getBoards, addBoard, editBoardName } from '../api/api';
+
 class BoardContainer extends React.Component {
     
     state = {
@@ -11,9 +13,7 @@ class BoardContainer extends React.Component {
     }
 
     async componentDidMount() {
-        const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/board/`);
-        const json = await response.json()
-
+        const json = await getBoards();
         const lastBoard = localStorage.getItem('boardId');
         let selectedBoard;
         if (lastBoard) {
@@ -30,16 +30,7 @@ class BoardContainer extends React.Component {
 
     addBoard = async (e) => {
         e.preventDefault();
-        const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/board`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                name: this.state.inputValue || 'New Board',
-            })
-        })
-        const json = await response.json();
+        const json = await addBoard();
         this.setState((state) => ({
             boards: [...state.boards, json],
             inputValue: '',
@@ -71,7 +62,7 @@ class BoardContainer extends React.Component {
                         obj={this.state.selectedBoard}
                         options={this.state.boards}
                         id={this.state.selectedBoard.id}
-                        apiRoute="board"
+                        apiRoute={editBoardName}
                         handleSelect={this.handleSelect}
                         defaultText='New Board'
                     />

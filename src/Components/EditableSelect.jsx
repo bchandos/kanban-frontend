@@ -67,18 +67,7 @@ class EditableSelect extends React.Component {
     }
 
     done = async (e) => {
-        const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/${this.props.apiRoute}/${this.props.id}`,
-        {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                id: this.props.id,
-                name: this.state.value,
-            })
-        });
-        const json = await response.json();
+        const json = await this.props.apiRoute(this.props.id, this.state.value);
         const idx = this.state.options.findIndex(o => o.id === json.id);
         this.setState((state) => ({
             editMode: false,

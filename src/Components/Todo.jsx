@@ -1,4 +1,5 @@
 import React from 'react';
+import { editTodoName } from '../api/api';
 import EditableText from './EditableText';
 
 class Todo extends React.Component {
@@ -18,7 +19,7 @@ class Todo extends React.Component {
                 <EditableText 
                     value={this.props.todo.name} 
                     id={this.props.todo.id} 
-                    apiRoute="todo"
+                    apiRoute={editTodoName}
                     defaultText='New Todo'
                 />
                 <i 

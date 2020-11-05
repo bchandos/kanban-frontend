@@ -1,6 +1,7 @@
 import React from 'react';
 import Card from './Card';
 import EditableText from './EditableText';
+import { getCards, addCard, deleteCard, reorderCards, editLaneName } from '../api/api';
 
 class Lane extends React.Component {
     state = {
@@ -18,8 +19,7 @@ class Lane extends React.Component {
     }
 
     async componentDidMount() {
-        const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/lane/${this.props.lane.id}/cards`);
-        const json = await response.json()
+        const json = await getCards(this.props.lane.id)
         this.setState({
             isLoaded: true,
             cards: json
@@ -35,17 +35,7 @@ class Lane extends React.Component {
 
     addCard = async (e) => {
         e.preventDefault();
-        const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/card`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                name: 'New Card',
-                laneId: this.props.lane.id,
-            })
-        })
-        const json = await response.json();
+        const json = await addCard(this.props.lane.id);
         this.setState({
             isLoaded: true,
             cards: json,
@@ -55,10 +45,7 @@ class Lane extends React.Component {
     deleteCard = async (e) => {
         e.preventDefault();
         const id = e.currentTarget.dataset.cardId;
-        const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/card/${id}`, {
-            method: 'DELETE',
-        });
-        const json = await response.json();
+        const json = await deleteCard(id);
         if (json.status == 'ok') {
             this.setState((state) => ({
                 cards: state.cards.filter(c => c.id != id),
@@ -107,17 +94,7 @@ class Lane extends React.Component {
 
     onDrop = async (e) => {
         e.currentTarget.classList.remove('w3-border', 'w3-border-green');
-        const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/card/reorder`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                newOrder: this.state.dragAndDrop.updatedOrder,
-                laneId: this.props.lane.id,
-            })
-        })
-        const json = await response.json();
+        const json = await reorderCards(this.state.dragAndDrop.updatedOrder, this.props.lane.id);
         this.setState({
             isLoaded: true,
             cards: json,
@@ -178,7 +155,7 @@ class Lane extends React.Component {
                     <EditableText 
                         value={this.props.lane.name}
                         id={this.props.lane.id}
-                        apiRoute="lane"
+                        apiRoute={editLaneName}
                         defaultText='New Lane'
                     />
                     <button 

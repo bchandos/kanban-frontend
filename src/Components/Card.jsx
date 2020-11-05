@@ -1,4 +1,5 @@
 import React from 'react';
+import { addTodo, deleteTodo, editCardName, getTodos, toggleTodo, uploadCardContents } from '../api/api';
 import EditableText from './EditableText';
 import Todo from './Todo';
 
@@ -15,8 +16,7 @@ class Card extends React.Component {
     }
 
     async componentDidMount() {
-        const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/card/${this.props.card.id}/todos`);
-        const json = await response.json();
+        const json = await getTodos(this.props.card.id);
 
         this.setState({
             isLoaded: true,
@@ -41,20 +41,7 @@ class Card extends React.Component {
     }
 
     uploadContents = async (e) => {
-        const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/card/${this.props.card.id}`,
-            {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    id: this.props.id,
-                    name: this.props.card.name,
-                    laneId: this.props.card.LaneId,
-                    contents: e.currentTarget.value,
-                })
-            });
-        const json = await response.json();
+        const json = await uploadCardContents(this.props.card, e.currentTarget.value);
         this.setState({
             contents: json.contents,
         })
@@ -62,17 +49,7 @@ class Card extends React.Component {
 
     addTodo = async (e) => {
         e.preventDefault();
-        const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/todo`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                name: 'New Todo',
-                cardId: this.props.card.id,
-            })
-        })
-        const json = await response.json();
+        const json = await addTodo(this.props.card.id);
         this.setState({
             isLoaded: true,
             todos: json,
@@ -82,10 +59,7 @@ class Card extends React.Component {
     deleteTodo = async (e) => {
         e.preventDefault();
         const id = e.currentTarget.dataset.todoId;
-        const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/todo/${id}`, {
-            method: 'DELETE',
-        });
-        const json = await response.json();
+        const json = await deleteTodo(id);
         if (json.status == 'ok') {
             this.setState((state) => ({
                 todos: state.todos.filter(t => t.id != id),
@@ -95,18 +69,7 @@ class Card extends React.Component {
 
     toggleCompletion = async (e) => {
         const id = e.currentTarget.dataset.todoId;
-        const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/todo/${id}`,
-            {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    id: id,
-                    complete: e.currentTarget.checked,
-                })
-            });
-        const json = await response.json();
+        const json = await toggleTodo(id, e.currentTarget.checked);
         const idx = this.state.todos.findIndex(t => t.id === json.id);
 
         this.setState((state) => ({
@@ -134,7 +97,7 @@ class Card extends React.Component {
         if ((!this.props.hideComplete) || (this.props.hideComplete && completion !== 1)) {
             return (
                 <div 
-                    className="w3-card w3-hover-shadow w3-round"
+                    className="w3-card w3-round"
                     draggable="true" 
                     data-index={this.props.index}
                     data-card-id={this.props.card.id}
@@ -152,7 +115,7 @@ class Card extends React.Component {
                             <EditableText 
                                 value={this.props.card.name} 
                                 id={this.props.card.id} 
-                                apiRoute="card"
+                                apiRoute={editCardName}
                                 defaultText='New Card'
                             />
                             <i className="material-icons icon" onClick={this.props.deleteCard} data-card-id={this.props.card.id}>
