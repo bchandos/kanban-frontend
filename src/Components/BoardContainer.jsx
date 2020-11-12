@@ -13,13 +13,20 @@ class BoardContainer extends React.Component {
     }
 
     async componentDidMount() {
-        const json = await getBoards();
-        const lastBoard = localStorage.getItem('boardId');
+        let json;
         let selectedBoard;
-        if (lastBoard) {
-            selectedBoard = json.find(b => b.id == lastBoard);
+        json = await getBoards(this.props.userId);
+        const lastBoard = localStorage.getItem('boardId');
+        if (json.length) {
+            if (lastBoard) {
+                selectedBoard = json.find(b => b.id == lastBoard);
+            } else {
+                selectedBoard = json[0];
+            }
         } else {
-            selectedBoard = json[0]
+            const newBoard = await addBoard(this.props.userId);
+            json = [newBoard];
+            selectedBoard = newBoard;
         }
 
         this.setState({
@@ -54,7 +61,10 @@ class BoardContainer extends React.Component {
   
     render() {
         return (
-            <div className="w3-container">
+            <div>
+                <div className="w3-container w3-deep-purple">
+                    <h1>You Kan...ban!</h1>
+                </div>
                 <div className="flex-container">
                     <EditableSelect 
                         key={this.state.selectedBoard.name}

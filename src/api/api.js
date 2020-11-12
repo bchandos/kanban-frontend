@@ -1,29 +1,41 @@
 // Board API calls
 
-export const getBoards = async () => {
-    const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/board/`);
+export const getBoards = async (userId) => {
+    const jwt = `Bearer ${localStorage.getItem('jwt')}`;
+    const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/user/${userId}/boards`,
+        {
+            headers: {
+                'Authorization': jwt,
+            }
+        }
+    );
     return response.json()
 }
 
-export const addBoard = async () => {
+export const addBoard = async (userId) => {
+    const jwt = `Bearer ${localStorage.getItem('jwt')}`;
     const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/board`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': jwt,
             },
             body: JSON.stringify({
                 name: 'New Board',
+                userId: userId,
             })
         })
     return response.json();
 }
 
 export const editBoardName = async (id, value) => {
+    const jwt = `Bearer ${localStorage.getItem('jwt')}`;
     const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/board/${id}`,
         {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': jwt,
             },
             body: JSON.stringify({
                 id: id,
@@ -36,15 +48,24 @@ export const editBoardName = async (id, value) => {
 // Lane API calls
 
 export const getLanes = async (boardId) => {
-    const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/board/${boardId}/lanes`);
+    const jwt = `Bearer ${localStorage.getItem('jwt')}`;
+    const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/board/${boardId}/lanes`,
+    {
+        headers: {
+            'Authorization': jwt,
+        }
+    }
+);
     return response.json()
 }
 
 export const addLane = async (boardId) => {
+    const jwt = `Bearer ${localStorage.getItem('jwt')}`;
     const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/lane`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': jwt,
             },
             body: JSON.stringify({
                 name: 'New Lane',
@@ -55,6 +76,7 @@ export const addLane = async (boardId) => {
 }
 
 export const deleteLane = async (laneId) => {
+    const jwt = `Bearer ${localStorage.getItem('jwt')}`;
     const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/lane/${laneId}`, {
             method: 'DELETE',
         });
@@ -62,10 +84,12 @@ export const deleteLane = async (laneId) => {
 }
 
 export const reorderLanes = async (newOrder, boardId) => {
+    const jwt = `Bearer ${localStorage.getItem('jwt')}`;
     const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/lane/reorder`, {
         method: 'PUT',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': jwt,
         },
         body: JSON.stringify({
             newOrder: newOrder,
@@ -76,11 +100,13 @@ export const reorderLanes = async (newOrder, boardId) => {
 }
 
 export const editLaneName = async (id, value) => {
+    const jwt = `Bearer ${localStorage.getItem('jwt')}`;
     const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/lane/${id}`,
         {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': jwt,
             },
             body: JSON.stringify({
                 id: id,
@@ -93,15 +119,24 @@ export const editLaneName = async (id, value) => {
 // Card API calls
 
 export const getCards = async (laneId) => {
-    const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/lane/${laneId}/cards`);
+    const jwt = `Bearer ${localStorage.getItem('jwt')}`;
+    const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/lane/${laneId}/cards`,
+    {
+        headers: {
+            'Authorization': jwt,
+        }
+    }
+);
     return response.json();
 }
 
 export const addCard = async (laneId) => {
+    const jwt = `Bearer ${localStorage.getItem('jwt')}`;
     const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/card`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': jwt,
         },
         body: JSON.stringify({
             name: 'New Card',
@@ -112,6 +147,7 @@ export const addCard = async (laneId) => {
 }
 
 export const deleteCard = async (cardId) => {
+    const jwt = `Bearer ${localStorage.getItem('jwt')}`;
     const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/card/${cardId}`, {
         method: 'DELETE',
     });
@@ -119,10 +155,12 @@ export const deleteCard = async (cardId) => {
 }
 
 export const reorderCards = async (newOrder, laneId) => {
+    const jwt = `Bearer ${localStorage.getItem('jwt')}`;
     const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/card/reorder`, {
         method: 'PUT',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': jwt,
         },
         body: JSON.stringify({
             newOrder: newOrder,
@@ -133,11 +171,13 @@ export const reorderCards = async (newOrder, laneId) => {
 }
 
 export const uploadCardContents = async (card, value) => {
+    const jwt = `Bearer ${localStorage.getItem('jwt')}`;
     const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/card/${card.id}`,
     {
         method: 'PUT',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': jwt,
         },
         body: JSON.stringify({
             id: card.id,
@@ -150,11 +190,13 @@ export const uploadCardContents = async (card, value) => {
 }
 
 export const editCardName = async (id, value) => {
+    const jwt = `Bearer ${localStorage.getItem('jwt')}`;
     const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/card/${id}`,
         {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': jwt,
             },
             body: JSON.stringify({
                 id: id,
@@ -166,15 +208,24 @@ export const editCardName = async (id, value) => {
 // Todo API calls
 
 export const getTodos = async (cardId) => {
-    const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/card/${cardId}/todos`);
+    const jwt = `Bearer ${localStorage.getItem('jwt')}`;
+    const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/card/${cardId}/todos`,
+    {
+        headers: {
+            'Authorization': jwt,
+        }
+    }
+);
     return response.json();
 }
 
 export const addTodo = async (cardId) => {
+    const jwt = `Bearer ${localStorage.getItem('jwt')}`;
     const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/todo`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': jwt,
         },
         body: JSON.stringify({
             name: 'New todo',
@@ -185,6 +236,7 @@ export const addTodo = async (cardId) => {
 }
 
 export const deleteTodo = async (todoId) => {
+    const jwt = `Bearer ${localStorage.getItem('jwt')}`;
     const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/todo/${todoId}`, {
         method: 'DELETE',
     });
@@ -192,11 +244,13 @@ export const deleteTodo = async (todoId) => {
 }
 
 export const toggleTodo = async (todoId, value) => {
+    const jwt = `Bearer ${localStorage.getItem('jwt')}`;
     const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/todo/${todoId}`,
         {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': jwt,
             },
             body: JSON.stringify({
                 id: todoId,
@@ -207,11 +261,13 @@ export const toggleTodo = async (todoId, value) => {
 }
 
 export const editTodoName = async (id, value) => {
+    const jwt = `Bearer ${localStorage.getItem('jwt')}`;
     const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/todo/${id}`,
         {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': jwt,
             },
             body: JSON.stringify({
                 id: id,
@@ -219,4 +275,51 @@ export const editTodoName = async (id, value) => {
             })
         });
     return response.json();
+}
+
+// Authentication API calls
+
+export const authenticateUser = async (username, password) => {
+    const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/auth/login`,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: username,
+                password: password
+            })
+        });
+    return response.json();
+}
+
+export const registerUser = async (username, password) => {
+    const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/auth/register`,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username: username,
+                password: password
+            })
+        });
+    return response.json();
+}
+
+export const checkToken = async (token) => {
+    const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/auth/check-token`,
+    {
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        }
+    });
+
+    if (response.ok) {
+        return true;
+    }
+
+    return false;
 }

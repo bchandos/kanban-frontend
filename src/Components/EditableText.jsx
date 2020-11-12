@@ -96,7 +96,7 @@ class EditableText extends React.Component {
         }
 
         return (
-            <div className="editable w3-padding-small w3-display-container" onDoubleClick={this.editText}>
+            <div className="editable w3-padding-small w3-display-container flex-grow" onDoubleClick={this.editText}>
                 <input 
                     className="w3-input input"
                     type="text" 
