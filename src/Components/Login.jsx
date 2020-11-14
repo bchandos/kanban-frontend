@@ -20,7 +20,8 @@ class Login extends React.Component {
             this.props.verifyToken();
         } else if (e.currentTarget.id === 'registration-form') {
             user = await registerUser(this.state.newUserName, this.state.newPassword);
-            console.log(user);
+            localStorage.setItem('jwt', user.jwt);
+            this.props.verifyToken();
         }
     }
 
