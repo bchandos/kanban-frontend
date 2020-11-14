@@ -2,7 +2,7 @@
 
 export const getBoards = async (userId) => {
     const jwt = `Bearer ${localStorage.getItem('jwt')}`;
-    const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/user/${userId}/boards`,
+    const response = await fetch(`${import.meta.env.VITE_HOST_IP}/user/${userId}/boards`,
         {
             headers: {
                 'Authorization': jwt,
@@ -14,7 +14,7 @@ export const getBoards = async (userId) => {
 
 export const addBoard = async (userId) => {
     const jwt = `Bearer ${localStorage.getItem('jwt')}`;
-    const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/board`, {
+    const response = await fetch(`${import.meta.env.VITE_HOST_IP}/board`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -30,7 +30,7 @@ export const addBoard = async (userId) => {
 
 export const editBoardName = async (id, value) => {
     const jwt = `Bearer ${localStorage.getItem('jwt')}`;
-    const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/board/${id}`,
+    const response = await fetch(`${import.meta.env.VITE_HOST_IP}/board/${id}`,
         {
             method: 'PUT',
             headers: {
@@ -49,7 +49,7 @@ export const editBoardName = async (id, value) => {
 
 export const getLanes = async (boardId) => {
     const jwt = `Bearer ${localStorage.getItem('jwt')}`;
-    const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/board/${boardId}/lanes`,
+    const response = await fetch(`${import.meta.env.VITE_HOST_IP}/board/${boardId}/lanes`,
     {
         headers: {
             'Authorization': jwt,
@@ -61,7 +61,7 @@ export const getLanes = async (boardId) => {
 
 export const addLane = async (boardId) => {
     const jwt = `Bearer ${localStorage.getItem('jwt')}`;
-    const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/lane`, {
+    const response = await fetch(`${import.meta.env.VITE_HOST_IP}/lane`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ export const addLane = async (boardId) => {
 
 export const deleteLane = async (laneId) => {
     const jwt = `Bearer ${localStorage.getItem('jwt')}`;
-    const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/lane/${laneId}`, {
+    const response = await fetch(`${import.meta.env.VITE_HOST_IP}/lane/${laneId}`, {
             method: 'DELETE',
         });
     return response.json();
@@ -85,7 +85,7 @@ export const deleteLane = async (laneId) => {
 
 export const reorderLanes = async (newOrder, boardId) => {
     const jwt = `Bearer ${localStorage.getItem('jwt')}`;
-    const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/lane/reorder`, {
+    const response = await fetch(`${import.meta.env.VITE_HOST_IP}/lane/reorder`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -101,7 +101,7 @@ export const reorderLanes = async (newOrder, boardId) => {
 
 export const editLaneName = async (id, value) => {
     const jwt = `Bearer ${localStorage.getItem('jwt')}`;
-    const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/lane/${id}`,
+    const response = await fetch(`${import.meta.env.VITE_HOST_IP}/lane/${id}`,
         {
             method: 'PUT',
             headers: {
@@ -120,7 +120,7 @@ export const editLaneName = async (id, value) => {
 
 export const getCards = async (laneId) => {
     const jwt = `Bearer ${localStorage.getItem('jwt')}`;
-    const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/lane/${laneId}/cards`,
+    const response = await fetch(`${import.meta.env.VITE_HOST_IP}/lane/${laneId}/cards`,
     {
         headers: {
             'Authorization': jwt,
@@ -132,7 +132,7 @@ export const getCards = async (laneId) => {
 
 export const addCard = async (laneId) => {
     const jwt = `Bearer ${localStorage.getItem('jwt')}`;
-    const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/card`, {
+    const response = await fetch(`${import.meta.env.VITE_HOST_IP}/card`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -148,7 +148,7 @@ export const addCard = async (laneId) => {
 
 export const deleteCard = async (cardId) => {
     const jwt = `Bearer ${localStorage.getItem('jwt')}`;
-    const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/card/${cardId}`, {
+    const response = await fetch(`${import.meta.env.VITE_HOST_IP}/card/${cardId}`, {
         method: 'DELETE',
     });
     return response.json();
@@ -156,7 +156,7 @@ export const deleteCard = async (cardId) => {
 
 export const reorderCards = async (newOrder, laneId) => {
     const jwt = `Bearer ${localStorage.getItem('jwt')}`;
-    const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/card/reorder`, {
+    const response = await fetch(`${import.meta.env.VITE_HOST_IP}/card/reorder`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -172,7 +172,7 @@ export const reorderCards = async (newOrder, laneId) => {
 
 export const uploadCardContents = async (card, value) => {
     const jwt = `Bearer ${localStorage.getItem('jwt')}`;
-    const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/card/${card.id}`,
+    const response = await fetch(`${import.meta.env.VITE_HOST_IP}/card/${card.id}`,
     {
         method: 'PUT',
         headers: {
@@ -191,7 +191,7 @@ export const uploadCardContents = async (card, value) => {
 
 export const editCardName = async (id, value) => {
     const jwt = `Bearer ${localStorage.getItem('jwt')}`;
-    const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/card/${id}`,
+    const response = await fetch(`${import.meta.env.VITE_HOST_IP}/card/${id}`,
         {
             method: 'PUT',
             headers: {
@@ -209,7 +209,7 @@ export const editCardName = async (id, value) => {
 
 export const getTodos = async (cardId) => {
     const jwt = `Bearer ${localStorage.getItem('jwt')}`;
-    const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/card/${cardId}/todos`,
+    const response = await fetch(`${import.meta.env.VITE_HOST_IP}/card/${cardId}/todos`,
     {
         headers: {
             'Authorization': jwt,
@@ -221,7 +221,7 @@ export const getTodos = async (cardId) => {
 
 export const addTodo = async (cardId) => {
     const jwt = `Bearer ${localStorage.getItem('jwt')}`;
-    const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/todo`, {
+    const response = await fetch(`${import.meta.env.VITE_HOST_IP}/todo`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -237,7 +237,7 @@ export const addTodo = async (cardId) => {
 
 export const deleteTodo = async (todoId) => {
     const jwt = `Bearer ${localStorage.getItem('jwt')}`;
-    const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/todo/${todoId}`, {
+    const response = await fetch(`${import.meta.env.VITE_HOST_IP}/todo/${todoId}`, {
         method: 'DELETE',
     });
     return response.json();
@@ -245,7 +245,7 @@ export const deleteTodo = async (todoId) => {
 
 export const toggleTodo = async (todoId, value) => {
     const jwt = `Bearer ${localStorage.getItem('jwt')}`;
-    const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/todo/${todoId}`,
+    const response = await fetch(`${import.meta.env.VITE_HOST_IP}/todo/${todoId}`,
         {
             method: 'PUT',
             headers: {
@@ -262,7 +262,7 @@ export const toggleTodo = async (todoId, value) => {
 
 export const editTodoName = async (id, value) => {
     const jwt = `Bearer ${localStorage.getItem('jwt')}`;
-    const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/todo/${id}`,
+    const response = await fetch(`${import.meta.env.VITE_HOST_IP}/todo/${id}`,
         {
             method: 'PUT',
             headers: {
@@ -280,7 +280,7 @@ export const editTodoName = async (id, value) => {
 // Authentication API calls
 
 export const authenticateUser = async (username, password) => {
-    const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/auth/login`,
+    const response = await fetch(`${import.meta.env.VITE_HOST_IP}/auth/login`,
         {
             method: 'POST',
             headers: {
@@ -295,7 +295,7 @@ export const authenticateUser = async (username, password) => {
 }
 
 export const registerUser = async (username, password) => {
-    const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/auth/register`,
+    const response = await fetch(`${import.meta.env.VITE_HOST_IP}/auth/register`,
         {
             method: 'POST',
             headers: {
@@ -310,7 +310,7 @@ export const registerUser = async (username, password) => {
 }
 
 export const checkToken = async (token) => {
-    const response = await fetch(`http://${import.meta.env.VITE_HOST_IP}:3333/auth/check-token`,
+    const response = await fetch(`${import.meta.env.VITE_HOST_IP}/auth/check-token`,
     {
         headers: {
             'Authorization': `Bearer ${token}`,
