@@ -15,7 +15,6 @@ class App extends React.Component {
   verifyToken = async () => {
     let userId;
     const jwt = localStorage.getItem('jwt');
-    console.log(jwt);
     if (jwt && await checkToken(jwt)) {
       userId = jwt_decode(jwt).userId;
     } else {
