@@ -1,3 +1,8 @@
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 .dropdown-item {
     cursor: pointer;
 }
@@ -60,10 +65,8 @@
     align-items: center;
 }
 
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.margin-bottom {
+    margin-bottom: 48px;
 }
 
 .todo {

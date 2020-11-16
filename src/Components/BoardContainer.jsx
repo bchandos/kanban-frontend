@@ -61,7 +61,7 @@ class BoardContainer extends React.Component {
   
     render() {
         return (
-            <div>
+            <div className="margin-bottom">
                 <div className="w3-container w3-deep-purple">
                     <h1>You Kan...ban!</h1>
                 </div>
