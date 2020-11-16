@@ -107,6 +107,7 @@ class Board extends React.Component {
 
     onDragEnd = (e) => {
         e.currentTarget.classList.remove('w3-opacity-max');
+        e.currentTarget.setAttribute('draggable', 'false');
     }
 
     handleInput = (e) => {

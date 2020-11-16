@@ -24,6 +24,14 @@ class Card extends React.Component {
         })
     }
 
+    dragIndicatorDown = (e) => {
+        e.currentTarget.closest('.card').setAttribute('draggable', 'true');
+    }
+
+    dragIndicatorUp = (e) => {
+        e.currentTarget.closest('.card').setAttribute('draggable', 'false');
+    }
+
     updateContent = (e) => {
         e.persist();
         this.setState((state) => ({
@@ -102,8 +110,7 @@ class Card extends React.Component {
         if ((!this.props.hideComplete) || (this.props.hideComplete && completion !== 1)) {
             return (
                 <div 
-                    className="w3-card w3-round"
-                    draggable="true" 
+                    className="w3-card w3-round card"
                     data-index={this.props.index}
                     data-card-id={this.props.card.id}
                     data-sort-order={this.props.card.sortOrder}
@@ -113,20 +120,19 @@ class Card extends React.Component {
                     onDragLeave={this.props.onDragLeave}
                     onDragEnd={this.props.onDragEnd}
                 >
-                    <div 
-                        className="w3-panel" 
-                    >
-                        <div className="w3-panel card-header">
-                            <EditableText 
-                                value={this.props.card.name} 
-                                id={this.props.card.id} 
-                                apiRoute={editCardName}
-                                defaultText='New Card'
-                            />
-                            <i className="material-icons icon" onClick={this.props.deleteCard} data-card-id={this.props.card.id}>
-                                delete
-                            </i>
-                        </div>
+                    <div className="w3-panel card-header">
+                        <i className="material-icons icon" onMouseDown={this.dragIndicatorDown} onMouseUp={this.dragIndicatorUp}>
+                            drag_indicator
+                        </i>
+                        <EditableText 
+                            value={this.props.card.name} 
+                            id={this.props.card.id} 
+                            apiRoute={editCardName}
+                            defaultText='New Card'
+                        />
+                        <i className="material-icons icon" onClick={this.props.deleteCard} data-card-id={this.props.card.id}>
+                            delete
+                        </i>
                     </div>
                     <div className="w3-panel">
                         <div className="w3-light-grey">

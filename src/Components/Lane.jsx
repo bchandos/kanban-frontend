@@ -33,6 +33,14 @@ class Lane extends React.Component {
         }
     }
 
+    dragIndicatorDown = (e) => {
+        e.currentTarget.closest('.lane').setAttribute('draggable', 'true');
+    }
+
+    dragIndicatorUp = (e) => {
+        e.currentTarget.closest('.lane').setAttribute('draggable', 'false');
+    }
+
     addCard = async (e) => {
         e.preventDefault();
         const json = await addCard(this.props.lane.id);
@@ -113,6 +121,7 @@ class Lane extends React.Component {
 
     onDragEnd = (e) => {
         e.currentTarget.classList.remove('w3-opacity-max');
+        e.currentTarget.setAttribute('draggable', 'false');
     }
 
     handleClick = (e) => {
@@ -141,7 +150,6 @@ class Lane extends React.Component {
         return (
             <div 
                 className="w3-panel lane w3-border w3-topbar w3-round w3-border-deep-purple" 
-                draggable="true"
                 data-index={this.props.index}
                 data-lane-id={this.props.lane.id}
                 data-sort-order={this.props.lane.sortOrder}
@@ -152,6 +160,9 @@ class Lane extends React.Component {
                 onDragEnd={this.props.onDragEnd}
             >
                 <div className="lane-header">
+                    <i className="material-icons icon" onMouseDown={this.dragIndicatorDown} onMouseUp={this.dragIndicatorUp}>
+                        drag_indicator
+                    </i>
                     <EditableText 
                         value={this.props.lane.name}
                         id={this.props.lane.id}
