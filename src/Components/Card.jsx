@@ -41,10 +41,15 @@ class Card extends React.Component {
     }
 
     uploadContents = async (e) => {
+        e.persist();
         const json = await uploadCardContents(this.props.card, e.currentTarget.value);
-        this.setState({
-            contents: json.contents,
-        })
+        // Only set the state when the input is blurred to avoid slow connection
+        // overwriting the value as you're typing
+        if (e.nativeEvent.type === 'blur') {
+            this.setState({
+                contents: json.contents,
+            })
+        }
     }
 
     addTodo = async (e) => {
