@@ -35,9 +35,9 @@ class BoardContainer extends React.Component {
         })
     }
 
-    addBoard = async (e) => {
+    handleAddBoard = async (e) => {
         e.preventDefault();
-        const json = await addBoard();
+        const json = await addBoard(this.props.userId);
         this.setState((state) => ({
             boards: [...state.boards, json],
             inputValue: '',
@@ -76,7 +76,7 @@ class BoardContainer extends React.Component {
                         handleSelect={this.handleSelect}
                         defaultText='New Board'
                     />
-                    <button className="w3-btn" onClick={this.addBoard}>
+                    <button className="w3-btn" onClick={this.handleAddBoard}>
                         <i className="material-icons">add</i>
                     </button>
                 </div>
