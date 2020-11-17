@@ -20,7 +20,7 @@ class Todo extends React.Component {
                     value={this.props.todo.name} 
                     id={this.props.todo.id} 
                     apiRoute={editTodoName}
-                    defaultText='New Todo'
+                    defaultText='New todo'
                 />
                 <i 
                     className="material-icons icon" 
