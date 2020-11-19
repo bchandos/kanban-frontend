@@ -13,9 +13,10 @@ class BoardContainer extends React.Component {
     }
 
     async componentDidMount() {
+        console.log(this.props.user);
         let json;
         let selectedBoard;
-        json = await getBoards(this.props.userId);
+        json = await getBoards(this.props.user.id);
         const lastBoard = localStorage.getItem('boardId');
         if (json.length) {
             if (lastBoard) {
@@ -24,7 +25,7 @@ class BoardContainer extends React.Component {
                 selectedBoard = json[0];
             }
         } else {
-            const newBoard = await addBoard(this.props.userId);
+            const newBoard = await addBoard(this.props.user.id);
             json = [newBoard];
             selectedBoard = newBoard;
         }
@@ -37,7 +38,7 @@ class BoardContainer extends React.Component {
 
     handleAddBoard = async (e) => {
         e.preventDefault();
-        const json = await addBoard(this.props.userId);
+        const json = await addBoard(this.props.user.id);
         this.setState((state) => ({
             boards: [...state.boards, json],
             inputValue: '',
@@ -63,7 +64,15 @@ class BoardContainer extends React.Component {
         return (
             <div className="margin-bottom">
                 <div className="w3-container w3-deep-purple">
-                    <h1>You Kan...ban!</h1>
+                    <div className="flex-container space-between">
+                        <h1>You Kan...ban!</h1>
+                        <ul className="nav-menu">
+                            <li className="w3-margin-left w3-margin-right">
+                                <a href="#">{this.props.user.name}</a>
+                            </li>
+                            { (this.props.user.admin ? <li className="w3-margin-left w3-margin-right"><a href="#">Admin</a></li> : null) }
+                        </ul>
+                    </div>
                 </div>
                 <div className="flex-container">
                     <EditableSelect 

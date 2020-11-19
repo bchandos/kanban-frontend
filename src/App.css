@@ -69,6 +69,24 @@
     margin-bottom: 48px;
 }
 
+.nav-menu > ul{
+    list-style: none;
+}
+
+.nav-menu > li {
+    display: inline;
+    font-weight: 600;
+    font-size: 1.5em;
+}
+
+.nav-menu a {
+    text-decoration: none;
+}
+
+.space-between {
+    justify-content: space-between;
+}
+
 .todo {
     display: flex;
     align-items: center;

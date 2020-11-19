@@ -9,20 +9,20 @@ import { checkToken } from './api/api';
 class App extends React.Component {
 
   state = {
-    userId: null,
+    user: null,
   }
 
   verifyToken = async () => {
-    let userId;
+    let user;
     const jwt = localStorage.getItem('jwt');
     if (jwt && await checkToken(jwt)) {
-      userId = jwt_decode(jwt).userId;
+      user = jwt_decode(jwt).user;
     } else {
       // localStorage.setItem('jwt', null);
-      userId = null;
+      user = null;
     }
     this.setState({
-      userId
+      user
     })
   }
 
@@ -34,7 +34,7 @@ class App extends React.Component {
   render() {
     return (
         <div>
-          { this.state.userId ? <BoardContainer userId={this.state.userId} /> : <Login verifyToken={this.verifyToken} />}
+          { this.state.user ? <BoardContainer user={this.state.user} /> : <Login verifyToken={this.verifyToken} />}
           <footer className="w3-container w3-gray footer">
               <div className="w3-right w3-padding">
                 &copy; 2020 <a href="https://billchandos.dev">billchandos.dev</a>
