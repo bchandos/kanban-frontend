@@ -15,10 +15,15 @@ class App extends React.Component {
   verifyToken = async () => {
     let user;
     const jwt = localStorage.getItem('jwt');
-    if (jwt && await checkToken(jwt)) {
-      user = jwt_decode(jwt).user;
+    if (jwt) {
+      try {
+        await checkToken(jwt);
+        user = jwt_decode(jwt).user;
+      } catch(err) {
+        localStorage.setItem('jwt', null);
+        user = null;
+      }
     } else {
-      // localStorage.setItem('jwt', null);
       user = null;
     }
     this.setState({
@@ -34,7 +39,7 @@ class App extends React.Component {
   render() {
     return (
         <div>
-          { this.state.user ? <BoardContainer user={this.state.user} /> : <Login verifyToken={this.verifyToken} />}
+          { this.state.user ? <BoardContainer user={this.state.user} verifyToken={this.verifyToken} /> : <Login verifyToken={this.verifyToken} />}
           <footer className="w3-container w3-gray footer">
               <div className="w3-right w3-padding">
                 &copy; 2020 <a href="https://billchandos.dev">billchandos.dev</a>

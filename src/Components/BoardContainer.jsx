@@ -13,7 +13,6 @@ class BoardContainer extends React.Component {
     }
 
     async componentDidMount() {
-        console.log(this.props.user);
         let json;
         let selectedBoard;
         json = await getBoards(this.props.user.id);
@@ -59,6 +58,12 @@ class BoardContainer extends React.Component {
         }));
         localStorage.setItem('boardId', e.target.dataset.value);
     }
+
+    logout = (e) => {
+        e.preventDefault();
+        localStorage.setItem('jwt', '');
+        this.props.verifyToken();
+    }
   
     render() {
         return (
@@ -71,6 +76,7 @@ class BoardContainer extends React.Component {
                                 <a href="#">{this.props.user.name}</a>
                             </li>
                             { (this.props.user.admin ? <li className="w3-margin-left w3-margin-right"><a href="#">Admin</a></li> : null) }
+                            <li className="w3-margin-left w3-margin-right"><a href="#" onClick={this.logout}>Logout</a></li>
                         </ul>
                     </div>
                 </div>
