@@ -19,11 +19,14 @@ class Board extends React.Component {
     }
 
     async componentDidMount() {
-        const json = await getLanes(this.props.boardId);
-        this.setState({
-            isLoaded: true,
-            lanes: json,
-        })
+        // On first load we are often missing boardId!
+        if (this.props.boardId) {
+            const json = await getLanes(this.props.boardId);
+            this.setState({
+                isLoaded: true,
+                lanes: json,
+            })
+        }
     }
 
     addLane = async (e) => {
