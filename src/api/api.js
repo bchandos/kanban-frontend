@@ -79,6 +79,9 @@ export const deleteLane = async (laneId) => {
     const jwt = `Bearer ${localStorage.getItem('jwt')}`;
     const response = await fetch(`${import.meta.env.VITE_HOST_IP}/lane/${laneId}`, {
             method: 'DELETE',
+            headers: {
+                'Authorization': jwt
+            }
         });
     return response.json();
 }
@@ -150,6 +153,9 @@ export const deleteCard = async (cardId) => {
     const jwt = `Bearer ${localStorage.getItem('jwt')}`;
     const response = await fetch(`${import.meta.env.VITE_HOST_IP}/card/${cardId}`, {
         method: 'DELETE',
+        headers: {
+            'Authorization': jwt
+        }
     });
     return response.json();
 }
@@ -239,6 +245,9 @@ export const deleteTodo = async (todoId) => {
     const jwt = `Bearer ${localStorage.getItem('jwt')}`;
     const response = await fetch(`${import.meta.env.VITE_HOST_IP}/todo/${todoId}`, {
         method: 'DELETE',
+        headers: {
+            'Authorization': jwt
+        }
     });
     return response.json();
 }
