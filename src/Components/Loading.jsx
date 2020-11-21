@@ -6,7 +6,9 @@ class Loading extends React.Component {
         return (
             <div className="loading-canvas w3-display-container">
                 <div className="w3-card w3-display-middle w3-padding-large">
-                    Loading
+                    <h1>
+                        Loading...
+                    </h1>
                 </div>
             </div>
         )
