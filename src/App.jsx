@@ -45,7 +45,6 @@ class App extends React.Component {
   render() {
     let mainContent;
     if (!this.state.loadingToken) {
-      console.log(this.state.user);
       if (this.state.user) {
         mainContent = <BoardContainer user={this.state.user} verifyToken={this.verifyToken} />
       } else {
