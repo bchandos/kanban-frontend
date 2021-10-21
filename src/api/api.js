@@ -187,7 +187,6 @@ export const uploadCardContents = async (card, value) => {
         },
         body: JSON.stringify({
             id: card.id,
-            name: card.name,
             laneId: card.LaneId,
             contents: value,
         })
