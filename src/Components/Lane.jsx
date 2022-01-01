@@ -176,6 +176,14 @@ class Lane extends React.Component {
                     >
                         <i className="material-icons icon">delete</i>
                     </button>
+                    <button 
+                        className="w3-btn w3-round-xxlarge" 
+                        onClick={this.props.duplicateLane}
+                        data-lane-id={this.props.lane.id}
+                    >
+                        <i className="material-icons icon">content_copy</i>
+                    </button>
+                    
                 </div>
                 <div>
                     <input className="w3-margin-left" type="checkbox" onChange={this.handleClick} checked={this.state.hideComplete} />

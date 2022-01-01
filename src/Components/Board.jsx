@@ -1,6 +1,6 @@
 import React from 'react';
 import Lane from './Lane';
-import { getLanes, addLane, deleteLane, reorderLanes } from '../api/api';
+import { getLanes, addLane, deleteLane, reorderLanes, duplicateLane } from '../api/api';
 
 class Board extends React.Component {
     
@@ -32,6 +32,17 @@ class Board extends React.Component {
     addLane = async (e) => {
         e.preventDefault();
         const json = await addLane(this.props.boardId);
+        this.setState((state) => ({
+            isLoaded: true,
+            lanes: [...state.lanes, json],
+            inputValue: '',
+        }));
+    }
+    
+    duplicateLane = async (e) => {
+        e.preventDefault();
+        const id = e.currentTarget.dataset.laneId;
+        const json = await duplicateLane(id);
         this.setState((state) => ({
             isLoaded: true,
             lanes: [...state.lanes, json],
@@ -126,6 +137,7 @@ class Board extends React.Component {
                 key={lane.id} 
                 lane={lane}
                 deleteLane={this.deleteLane}
+                duplicateLane={this.duplicateLane}
                 index={index}
                 onDragStart={this.onDragStart}
                 onDragStart={this.onDragStart}

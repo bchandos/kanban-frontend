@@ -119,6 +119,19 @@ export const editLaneName = async (id, value) => {
     return response.json();
 }
 
+export const duplicateLane = async (id) => {
+    // Create a new lane with contents identical to existing lane
+    const jwt = `Bearer ${localStorage.getItem('jwt')}`;
+    const response = await fetch(`${import.meta.env.VITE_HOST_IP}/lane/${id}/duplicate`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': jwt,
+        },
+    })
+    return response.json();
+}
+
 // Card API calls
 
 export const getCards = async (laneId) => {
