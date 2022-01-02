@@ -298,6 +298,23 @@ export const editTodoName = async (id, value) => {
     return response.json();
 }
 
+export const uploadTodoNote = async (todo, value) => {
+    const jwt = `Bearer ${localStorage.getItem('jwt')}`;
+    const response = await fetch(`${import.meta.env.VITE_HOST_IP}/todo/${todo.id}`,
+    {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': jwt,
+        },
+        body: JSON.stringify({
+            id: todo.id,
+            note: value,
+        })
+    });
+    return response.json();
+}
+
 // Authentication API calls
 
 export const authenticateUser = async (username, password) => {
