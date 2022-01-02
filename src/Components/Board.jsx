@@ -140,7 +140,6 @@ class Board extends React.Component {
                 duplicateLane={this.duplicateLane}
                 index={index}
                 onDragStart={this.onDragStart}
-                onDragStart={this.onDragStart}
                 onDragOver={this.onDragOver}
                 onDrop={this.onDrop}
                 onDragLeave={this.onDragLeave}
