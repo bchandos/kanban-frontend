@@ -13,6 +13,10 @@ class Todo extends React.Component {
         }
     }
 
+    componentDidMount() {
+        this.resizeTextArea();
+    }
+
     toggleTodoNotes = async (e) => {
         this.setState((state) => ({ notesVisible: !state.notesVisible }))
     }
@@ -26,6 +30,7 @@ class Todo extends React.Component {
             this.setState({
                 note: json.note,
             })
+            this.resizeTextArea();
         }
     }
     
@@ -42,6 +47,21 @@ class Todo extends React.Component {
             this.setState({
                 keyCounter: 0,
             })
+        }
+    }
+
+    resizeTextArea = () => {
+        const textArea = document.getElementById(`todo-note-${this.props.todo.id}`);
+        if (textArea) {
+            const width = textArea.clientWidth;
+            let resizingDiv = document.createElement('div');
+            resizingDiv.classList.add('resizing-div');
+            resizingDiv.style.width = `${width}px`;
+            resizingDiv.innerText = textArea.value;
+            resizingDiv = document.body.appendChild(resizingDiv);
+            const renderedHeigth = resizingDiv.clientHeight;
+            resizingDiv.remove();
+            textArea.style.height = `${Math.max(64, (renderedHeigth + 15))}px`;
         }
     }
 

@@ -115,3 +115,9 @@
     top: 0;
     left: 0;
 }
+
+.resizing-div {
+    position: absolute;
+    opacity: 0;
+    z-index: -999;
+}

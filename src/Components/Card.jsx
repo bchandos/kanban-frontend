@@ -22,6 +22,7 @@ class Card extends React.Component {
             isLoaded: true,
             todos: json,
         })
+        this.resizeTextArea();
     }
 
     dragIndicatorDown = (e) => {
@@ -56,7 +57,8 @@ class Card extends React.Component {
         if (e.nativeEvent.type === 'blur') {
             this.setState({
                 contents: json.contents,
-            })
+            });
+            this.resizeTextArea();
         }
     }
 
@@ -92,6 +94,21 @@ class Card extends React.Component {
                 ...state.todos.slice(idx+1)            
             ]
         }));
+    }
+
+    resizeTextArea = () => {
+        const textArea = document.getElementById(`card-content-${this.props.card.id}`);
+        if (textArea) {
+            const width = textArea.clientWidth;
+            let resizingDiv = document.createElement('div');
+            resizingDiv.classList.add('resizing-div');
+            resizingDiv.style.width = `${width}px`;
+            resizingDiv.innerText = textArea.value;
+            resizingDiv = document.body.appendChild(resizingDiv);
+            const renderedHeigth = resizingDiv.clientHeight;
+            resizingDiv.remove();
+            textArea.style.height = `${Math.max(64, (renderedHeigth + 15))}px`;
+        }
     }
 
     render() {
