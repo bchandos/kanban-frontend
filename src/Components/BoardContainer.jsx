@@ -70,13 +70,32 @@ class BoardContainer extends React.Component {
             <div className="margin-bottom">
                 <div className="w3-container w3-deep-purple">
                     <div className="flex-container space-between">
-                        <h1>You Kan...ban!</h1>
+                        {/* Medium and Large Header */}
+                        <h1 className="w3-hide-small">You Kan...ban!</h1>
+                        {/* Small Header */}
+                        <h2 className="w3-hide-medium w3-hide-large">YKB!</h2>
                         <ul className="nav-menu">
                             <li className="w3-margin-left w3-margin-right">
-                                <a href="#">{this.props.user.name}</a>
+                                <a href="#">
+                                    <span className="w3-hide-small">{this.props.user.name}</span>
+                                    <span className="w3-hide-medium w3-hide-large material-icons">account_circle</span>
+                                </a>
                             </li>
-                            { (this.props.user.admin ? <li className="w3-margin-left w3-margin-right"><a href="#">Admin</a></li> : null) }
-                            <li className="w3-margin-left w3-margin-right"><a href="#" onClick={this.logout}>Logout</a></li>
+                            { (this.props.user.admin ? 
+                                <li className="w3-margin-left w3-margin-right">
+                                    <a href="#">
+                                        <span className="w3-hide-small">Admin</span>
+                                        <span className="w3-hide-medium w3-hide-large material-icons">admin_panel_settings</span>
+                                    </a>
+                                </li> 
+                                : null) 
+                            }
+                            <li className="w3-margin-left w3-margin-right">
+                                <a href="#" onClick={this.logout}>
+                                    <span className="w3-hide-small">Logout</span>
+                                    <span className="w3-hide-medium w3-hide-large material-icons">logout</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
