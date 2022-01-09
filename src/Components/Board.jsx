@@ -16,6 +16,7 @@ class Board extends React.Component {
             originalOrder: [],
             updatedOrder: []
         },
+        laneInModal: null,
     }
 
     async componentDidMount() {
@@ -48,6 +49,18 @@ class Board extends React.Component {
             lanes: [...state.lanes, json],
             inputValue: '',
         }));
+    }
+
+    openInModal = (e) => {
+        e.preventDefault();
+        const id = e.currentTarget.dataset.laneId;
+        this.setState({ laneInModal: parseInt(id) });
+        document.getElementById('lane-modal').style.display = 'block';
+    }
+
+    closeModel = (e) => {
+        this.setState({ laneInModal: null });
+        document.getElementById('lane-modal').style.display = 'none';
     }
 
     deleteLane = async (e) => {
@@ -138,6 +151,7 @@ class Board extends React.Component {
                 lane={lane}
                 deleteLane={this.deleteLane}
                 duplicateLane={this.duplicateLane}
+                openInModal={this.openInModal}
                 index={index}
                 onDragStart={this.onDragStart}
                 onDragOver={this.onDragOver}
@@ -152,6 +166,29 @@ class Board extends React.Component {
                     {allLanes}
                     <div className="w3-panel lane w3-border w3-topbar w3-round w3-border-deep-purple" style={{width: '24em'}}>
                         <button className="w3-btn w3-light-gray w3-block w3-margin-bottom w3-margin-top" onClick={this.addLane}>Add Lane</button>
+                    </div>
+                </div>
+                <div id="lane-modal" className="w3-modal">
+                    <div className="w3-modal-content">
+                    <div className="flex-container flex-end">
+                        <button 
+                            type="button" 
+                            className="w3-btn w3-round-xxlarge" 
+                            onClick={this.closeModel}
+                        >
+                            <span className="material-icons">close</span>
+                        </button>
+                    </div>
+                        { 
+                            (this.state.laneInModal ? 
+                                <Lane
+                                    key={this.state.laneInModal}
+                                    lane={lanes.find(l => l.id === this.state.laneInModal)}
+                                    inModal={true}
+                                />
+                            : null
+                            )
+                        }
                     </div>
                 </div>
             </div>

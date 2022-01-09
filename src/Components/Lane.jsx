@@ -160,15 +160,19 @@ class Lane extends React.Component {
                 onDragEnd={this.props.onDragEnd}
             >
                 <div className="lane-header">
+                    { (this.props.index ? 
                     <i className="material-icons icon" onMouseDown={this.dragIndicatorDown} onMouseUp={this.dragIndicatorUp}>
                         drag_indicator
                     </i>
+                    : null
+                    )}
                     <EditableText 
                         value={this.props.lane.name}
                         id={this.props.lane.id}
                         apiRoute={editLaneName}
                         defaultText='New Lane'
                     />
+                    { (this.props.deleteLane ? 
                     <button 
                         className="w3-btn w3-round-xxlarge" 
                         onClick={this.props.deleteLane}
@@ -176,6 +180,9 @@ class Lane extends React.Component {
                     >
                         <i className="material-icons icon">delete</i>
                     </button>
+                    : null
+                    )}
+                    { (this.props.duplicateLane ? 
                     <button 
                         className="w3-btn w3-round-xxlarge" 
                         onClick={this.props.duplicateLane}
@@ -183,7 +190,18 @@ class Lane extends React.Component {
                     >
                         <i className="material-icons icon">content_copy</i>
                     </button>
-                    
+                    : null
+                    )}
+                    { (!this.props.inModal ?
+                    <button 
+                        className="w3-btn w3-round-xxlarge" 
+                        onClick={this.props.openInModal}
+                        data-lane-id={this.props.lane.id}
+                    >
+                        <i className="material-icons icon">open_in_full</i>
+                    </button>
+                    : null
+                    )}
                 </div>
                 <div>
                     <input className="w3-margin-left" type="checkbox" onChange={this.handleClick} checked={this.state.hideComplete} />
