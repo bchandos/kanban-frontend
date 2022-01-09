@@ -18,10 +18,12 @@ class Login extends React.Component {
         newPasswordValid: false,
         newPasswordVerifyValid: false,
         newFormValid: false,
+        inSubmit: false,
     }
 
     handleSubmit = async (e) => {
         e.preventDefault();
+        this.setState({inSubmit: true});
         let user;
         if (e.currentTarget.id === 'login-form') {
             user = await authenticateUser(this.state.returningUserName, this.state.returningPassword);
@@ -32,6 +34,7 @@ class Login extends React.Component {
             localStorage.setItem('jwt', user.jwt);
             this.props.verifyToken();
         }
+        this.setState({inSubmit: false});
     }
 
     handleInput = (e) => {
@@ -51,27 +54,27 @@ class Login extends React.Component {
         let newPasswordVerifyValid = this.state.newPasswordVerifyValid;
 
         switch(fieldName) {
-        case 'returningUserName':
-            returningUserNameValid = value.length > 3;
-            returningFieldValidationErrors.returningUserName = returningUserNameValid ? '' : 'User name is too short';
-            break;
-        case 'returningPassword':
-            returningPasswordValid = value.length >= 6;
-            returningFieldValidationErrors.returningPassword = returningPasswordValid ? '': 'Password is too short';
-            break;
-        case 'newUserName':
-            newUserNameValid = value.length > 3;
-            newFieldValidationErrors.newUserName = newUserNameValid ? '' : 'Username is too short';
-            break;
-        case 'newPassword':
-            newPasswordValid = value.length >= 6;
-            newFieldValidationErrors.newPassword = newPasswordValid ? '' : 'Password is too short'
-            break;
-        case 'newPasswordVerify':
-            newPasswordVerifyValid = value == this.state.newPassword;
-            newFieldValidationErrors.newPasswordVerify = newPasswordVerifyValid ? '' : 'Passwords must match'
-        default:
-            break;
+            case 'returningUserName':
+                returningUserNameValid = value.length > 3;
+                returningFieldValidationErrors.returningUserName = returningUserNameValid ? '' : 'User name is too short';
+                break;
+            case 'returningPassword':
+                returningPasswordValid = value.length >= 6;
+                returningFieldValidationErrors.returningPassword = returningPasswordValid ? '': 'Password is too short';
+                break;
+            case 'newUserName':
+                newUserNameValid = value.length > 3;
+                newFieldValidationErrors.newUserName = newUserNameValid ? '' : 'Username is too short';
+                break;
+            case 'newPassword':
+                newPasswordValid = value.length >= 6;
+                newFieldValidationErrors.newPassword = newPasswordValid ? '' : 'Password is too short'
+                break;
+            case 'newPasswordVerify':
+                newPasswordVerifyValid = value == this.state.newPassword;
+                newFieldValidationErrors.newPasswordVerify = newPasswordVerifyValid ? '' : 'Passwords must match'
+            default:
+                break;
         }
         this.setState({newFormErrors: newFieldValidationErrors,
                         newUserNameValid: newUserNameValid,
@@ -136,6 +139,7 @@ class Login extends React.Component {
                         </p>
                     </form> 
                 </div>
+                { this.state.inSubmit ? <div className="login-mask"></div>: null }
             </div>
 
         )
