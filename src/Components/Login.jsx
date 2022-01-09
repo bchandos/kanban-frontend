@@ -100,44 +100,46 @@ class Login extends React.Component {
         return (
             <div>
                 <div className="w3-container w3-deep-purple">
-                    <h1>Login</h1>                
+                    <h1>Login</h1>
                 </div>
-                <div className="w3-container">
-                    <h2>Returning User</h2>
-                    <form id="login-form" className="w3-container" onSubmit={this.handleSubmit}>
-                        <p>
-                            <label>User Name</label>
-                            <input type="text" className="w3-input" name="returningUserName" value={this.state.returningUserName} onChange={this.handleInput} />
-                        </p>
-                        <p>
-                            <label>Password</label>
-                            <input type="password" className="w3-input" name="returningPassword" value={this.state.returningPassword} onChange={this.handleInput}/>
-                        </p>
-                        <p>
-                            <button className="w3-btn w3-blue" disabled={!this.state.returningFormValid}>Login</button>
-                            <span className="w3-padding w3-text-red">{returningFormErrors}</span>
-                        </p>
-                    </form>
-                </div>
-                <div className="w3-container w3-margin-top"> 
-                    <h2>New User</h2>
-                    <form id="registration-form" className="w3-container" onSubmit={this.handleSubmit}>
-                        <p>
-                            <label>User Name</label>
-                            <input type="text" className="w3-input" name="newUserName" value={this.state.newUserName} onChange={this.handleInput}/>
-                        </p>
-                        <p>
-                            <label>Password</label>
-                            <input type="password" className="w3-input" name="newPassword" value={this.state.newPassword} onChange={this.handleInput}/>
-                        </p>
-                        <p>
-                            <label>Verify Password</label>
-                            <input type="password" className="w3-input" name="newPasswordVerify" value={this.state.newPasswordVerify} onChange={this.handleInput}/>
-                        </p>
-                        <p>
-                            <button className="w3-btn w3-blue" disabled={!this.state.newFormValid}>Register</button><span className="w3-padding w3-text-red">{newFormErrors}</span>
-                        </p>
-                    </form> 
+                <div id="login-form-container" className="w3-card w3-padding">
+                    <div className="w3-container">
+                        <h2>Returning User</h2>
+                        <form id="login-form" className="w3-container" onSubmit={this.handleSubmit}>
+                            <p>
+                                <label>User Name</label>
+                                <input type="text" className="w3-input" name="returningUserName" value={this.state.returningUserName} onChange={this.handleInput} />
+                            </p>
+                            <p>
+                                <label>Password</label>
+                                <input type="password" className="w3-input" name="returningPassword" value={this.state.returningPassword} onChange={this.handleInput}/>
+                            </p>
+                            <p>
+                                <button className="w3-btn w3-blue" disabled={!this.state.returningFormValid}>Login</button>
+                                <span className="w3-padding w3-text-red">{returningFormErrors}</span>
+                            </p>
+                        </form>
+                    </div>
+                    <div className="w3-container w3-margin-top"> 
+                        <h2>New User</h2>
+                        <form id="registration-form" className="w3-container" onSubmit={this.handleSubmit}>
+                            <p>
+                                <label>User Name</label>
+                                <input type="text" className="w3-input" name="newUserName" value={this.state.newUserName} onChange={this.handleInput}/>
+                            </p>
+                            <p>
+                                <label>Password</label>
+                                <input type="password" className="w3-input" name="newPassword" value={this.state.newPassword} onChange={this.handleInput}/>
+                            </p>
+                            <p>
+                                <label>Verify Password</label>
+                                <input type="password" className="w3-input" name="newPasswordVerify" value={this.state.newPasswordVerify} onChange={this.handleInput}/>
+                            </p>
+                            <p>
+                                <button className="w3-btn w3-blue" disabled={!this.state.newFormValid}>Register</button><span className="w3-padding w3-text-red">{newFormErrors}</span>
+                            </p>
+                        </form> 
+                    </div>
                 </div>
                 { this.state.inSubmit ? <div className="login-mask"></div>: null }
             </div>
