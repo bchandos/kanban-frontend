@@ -91,7 +91,7 @@ class Card extends React.Component {
             todos: [
                 ...state.todos.slice(0, idx),
                 json,
-                ...state.todos.slice(idx+1)            
+                ...state.todos.slice(idx+1)
             ]
         }));
     }
