@@ -158,6 +158,7 @@ class Board extends React.Component {
                 onDrop={this.onDrop}
                 onDragLeave={this.onDragLeave}
                 onDragEnd={this.onDragEnd}
+                isBlank={this.state.laneInModal && lane.id === this.state.laneInModal}
             />
         )
         return (
