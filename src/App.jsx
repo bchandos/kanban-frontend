@@ -4,7 +4,7 @@ import Login from './Components/Login';
 import Loading from './Components/Loading';
 // import './w3.css';
 import './App.css';
-import jwt_decode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import { checkToken } from './api/api';
 
 class App extends React.Component {
@@ -23,7 +23,7 @@ class App extends React.Component {
     if (jwt) {
       const checked = await checkToken(jwt);
       if (checked) {
-        user = jwt_decode(jwt).user;
+        user = jwtDecode(jwt).user;
       } else {
         localStorage.setItem('jwt', '');
         user = null;
@@ -54,14 +54,14 @@ class App extends React.Component {
       mainContent = <Loading />
     }
     return (
-        <div>
-          { mainContent }
-          <footer className="w3-container w3-gray footer">
-              <div className="w3-right w3-padding">
-                &copy; 2020 <a href="https://billchandos.dev">billchandos.dev</a>
-              </div>
-          </footer>
-        </div>
+      <div>
+        {mainContent}
+        <footer className="w3-container w3-gray footer">
+          <div className="w3-right w3-padding">
+            &copy; 2025 <a href="https://billchandos.dev">billchandos.dev</a>
+          </div>
+        </footer>
+      </div>
     )
   }
 }
