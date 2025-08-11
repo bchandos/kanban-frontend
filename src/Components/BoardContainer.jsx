@@ -5,7 +5,7 @@ import EditableSelect from './EditableSelect';
 import { getBoards, addBoard, editBoardName } from '../api/api';
 
 class BoardContainer extends React.Component {
-    
+
     state = {
         boards: [],
         selectedBoard: {},
@@ -19,7 +19,8 @@ class BoardContainer extends React.Component {
         const lastBoard = localStorage.getItem('boardId');
         if (json.length) {
             if (lastBoard) {
-                selectedBoard = json.find(b => b.id == lastBoard);
+                // localStorage value could reference a board ID no longer available
+                selectedBoard = json.find(b => b.id == lastBoard) || json[0];
             } else {
                 selectedBoard = json[0];
             }
@@ -28,6 +29,8 @@ class BoardContainer extends React.Component {
             json = [newBoard];
             selectedBoard = newBoard;
         }
+        // This could have changed
+        localStorage.setItem('boardId', selectedBoard.id);
 
         this.setState({
             boards: json,
@@ -64,7 +67,7 @@ class BoardContainer extends React.Component {
         localStorage.setItem('jwt', '');
         this.props.verifyToken();
     }
-  
+
     render() {
         return (
             <div className="margin-bottom">
@@ -81,14 +84,14 @@ class BoardContainer extends React.Component {
                                     <span className="w3-hide-medium w3-hide-large material-icons">account_circle</span>
                                 </a>
                             </li>
-                            { (this.props.user.admin ? 
+                            {(this.props.user.admin ?
                                 <li className="w3-margin-left w3-margin-right">
                                     <a href="#">
                                         <span className="w3-hide-small">Admin</span>
                                         <span className="w3-hide-medium w3-hide-large material-icons">admin_panel_settings</span>
                                     </a>
-                                </li> 
-                                : null) 
+                                </li>
+                                : null)
                             }
                             <li className="w3-margin-left w3-margin-right">
                                 <a href="#" onClick={this.logout}>
@@ -100,7 +103,7 @@ class BoardContainer extends React.Component {
                     </div>
                 </div>
                 <div className="flex-container">
-                    <EditableSelect 
+                    <EditableSelect
                         key={this.state.selectedBoard.name}
                         value={this.state.selectedBoard.name}
                         obj={this.state.selectedBoard}
@@ -114,7 +117,7 @@ class BoardContainer extends React.Component {
                         <i className="material-icons">add</i>
                     </button>
                 </div>
-                <Board key={this.state.selectedBoard.id} boardId={this.state.selectedBoard.id}/>
+                <Board key={this.state.selectedBoard.id} boardId={this.state.selectedBoard.id} />
             </div>
         );
     }
